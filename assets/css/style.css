@@ -1,0 +1,969 @@
+:root {
+    --primary-black: #0a0a0a;
+    --accent-red: #d90429;
+    --text-gray: #8d99ae;
+    --pure-white: #edf2f4;
+    --futuristic-font: 'Orbitron', sans-serif;
+    --body-font: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+html {
+    scroll-behavior: smooth; /* Deslize suave ao clicar nos links do menu */
+}
+
+img {
+    user-select: none;
+    -webkit-user-drag: none; /* Impede de arrastar a foto da camiseta */
+}
+
+body {
+    background-color: var(--primary-black);
+    color: var(--pure-white);
+    font-family: var(--body-font);
+    line-height: 1.6;
+    overflow-x: hidden;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Header Estilizado */
+
+   /* --- HEADER REDESIGN (SENIOR LEVEL) --- */
+
+header {
+    height: 90px;
+    display: flex;
+    align-items: center;
+    position: fixed; /* Fixado no topo para scroll */
+    width: 100%;
+    top: 0;
+    left: 0;
+    background: rgba(10, 10, 10, 0.8); /* Efeito de transparência */
+    backdrop-filter: blur(15px); /* Efeito de vidro fosco futurista */
+    border-bottom: 1px solid rgba(217, 4, 41, 0.2); /* Linha vermelha sutil */
+    z-index: 9999;
+    transition: 0.4s ease;
+}
+
+/* Quando o usuário der scroll, o header pode diminuir */
+header.scroll-active {
+    height: 70px;
+    background: rgba(5, 5, 5, 0.95);
+}
+
+.header-wrapper {
+    width: 100%;
+    max-width: 1400px; /* Mais largo para sensação premium */
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Tipografia do Menu */
+.nav-menu ul {
+    display: flex;
+    list-style: none;
+    gap: 40px; /* Mais espaço entre os itens */
+}
+
+.nav-menu ul li a {
+    font-family: var(--futuristic-font);
+    font-size: 0.85rem;
+    font-weight: 400;
+    letter-spacing: 2px;
+    color: var(--pure-white);
+    text-decoration: none;
+    position: relative;
+    transition: 0.3s;
+}
+
+/* Linha animada embaixo do menu */
+.nav-menu ul li a::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0%;
+    height: 1px;
+    background-color: var(--accent-red);
+    transition: 0.3s;
+}
+
+.nav-menu ul li a:hover {
+    color: var(--accent-red);
+}
+
+.nav-menu ul li a:hover::after {
+    width: 100%;
+}
+
+/* Botão de Carrinho Moderno */
+.header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.cart-icon {
+    background: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 20px;
+    color: var(--pure-white);
+    font-family: var(--futuristic-font);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.3s;
+}
+
+.cart-icon:hover {
+    border-color: var(--accent-red);
+    background: rgba(217, 4, 41, 0.05);
+}
+
+.cart-badge-wrapper {
+    background: var(--accent-red);
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+}
+
+/* Ajuste no Hero para não ficar embaixo do header fixo */
+#hero {
+    margin-top: 0;
+    padding-top: 90px;
+}
+
+.logo h1 {
+    font-family: var(--futuristic-font);
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+}
+
+.logo h1 span {
+    color: var(--accent-red);
+}.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    user-select: none;
+}
+
+.logo h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900; /* Extra bold */
+    font-style: italic;
+    font-size: 1.8rem;
+    letter-spacing: -1.5px; /* Letras mais juntas como na foto */
+    color: #FFFFFF;
+    text-transform: uppercase;
+    transform: skewX(-5deg); /* Inclinação extra para estética de velocidade */
+}
+
+.logo h1 span {
+    color: var(--accent-red); /* O "FITNESS" em vermelho */
+    margin-left: 2px;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+}
+
+nav ul li a {
+    color: var(--pure-white);
+    text-decoration: none;
+    margin: 0 15px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    transition: 0.3s;
+}
+
+nav ul li a:hover {
+    color: var(--accent-red);
+}
+
+/* Hero Section */
+/* --- HERO RE-DESIGN --- */
+
+#hero {
+    position: relative;
+    height: 100vh; /* Ocupa a tela inteira */
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../img/banners/banner-header.png');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed; /* Efeito Parallax suave */
+    overflow: hidden;
+}
+
+.hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.4), rgba(0,0,0,0.8));
+    z-index: 1;
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* Garante que o texto fique acima da imagem e do overlay */
+    text-align: center;
+}
+
+.hero-content h2 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 900;
+    font-style: italic;
+    font-size: 4rem; /* Tamanho grande para impacto */
+    color: #fff;
+    text-transform: uppercase;
+    line-height: 1.1;
+    letter-spacing: -2px;
+    transform: skewX(-5deg); /* Inclinação de velocidade */
+}
+
+.hero-content h2 span {
+    color: var(--accent-red);
+}
+
+.hero-content p {
+    color: var(--text-gray);
+    margin-top: 20px;
+    font-size: 1.1rem;
+    letter-spacing: 2px;
+}
+
+/* Responsividade para o Hero */
+@media (max-width: 768px) {
+    .hero-content h2 {
+        font-size: 2.2rem;
+    }
+}
+
+.btn-primary {
+    background-color: var(--accent-red);
+    color: white;
+    padding: 15px 40px;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    border-radius: 0px; /* Minimalismo: bordas secas */
+    transition: 0.4s ease;
+    display: inline-block;
+    margin-top: 20px;
+}
+
+.btn-primary:hover {
+    background-color: #ef233c;
+    box-shadow: 0 0 20px var(--accent-red);
+}
+.section-padding {
+    padding: 80px 20px;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.section-title h2 {
+    font-family: var(--futuristic-font);
+    font-size: 2.5rem;
+    letter-spacing: 3px;
+}
+
+.highlight {
+    color: var(--accent-red);
+}
+
+/* Grid de Produtos */
+/* --- ESTILO DA VITRINE HORIZONTAL --- */
+.product-grid {
+    display: flex !important;
+    flex-direction: row;      /* Força os itens lado a lado */
+    flex-wrap: wrap;          /* Permite quebrar linha em telas pequenas */
+    justify-content: center;  /* Centraliza os produtos na tela */
+    gap: 30px;                /* Espaçamento entre os cards */
+    padding: 40px 0;
+    width: 100%;
+}
+
+.product-card {
+    flex: 0 1 260px;          /* Define largura fixa para cada camisa */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+}
+/* --- ENQUADRAMENTO DO MODELO (SEM CORTAR CABEÇA) --- */
+.product-image-wrapper {
+    position: relative;
+    aspect-ratio: 3 / 4;      /* Proporção vertical ideal */
+    overflow: hidden;
+}
+
+.product-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    /* Alinha pelo topo para priorizar o rosto do modelo */
+    object-position: top center; 
+    transition: opacity 0.5s ease;
+}
+
+/* Botão de Adicionar (Aparece no Hover) */
+.add-to-cart {
+    position: absolute;
+    bottom: -50px;
+    left: 0;
+    width: 100%;
+    padding: 15px;
+    background: var(--accent-red);
+    color: white;
+    border: none;
+    font-family: var(--futuristic-font);
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.product-card:hover .add-to-cart {
+    bottom: 0;
+}
+
+.product-info {
+    padding: 20px;
+    text-align: center;
+}
+
+.product-info h3 {
+    font-size: 1.1rem;
+    margin-bottom: 10px;
+}
+
+.price {
+    color: var(--accent-red);
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+/* Container da imagem para suportar frente e costas */
+.product-image {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+}
+
+/* A imagem das costas fica escondida por padrão */
+.img-back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: 0.5s ease;
+}/* Isso garante que APENAS as imagens do card específico mudem */
+
+/* Esconde a imagem da frente (camisa pura) */
+.product-card:hover .img-front {
+    opacity: 0;
+}
+
+/* Mostra a imagem de trás (modelo/costas) do card atual */
+.product-card:hover .img-back,
+.product-card:hover .img-model {
+    opacity: 1;
+    transform: scale(1.05); /* Zoom leve opcional para o enquadramento */
+}
+
+/* --- VITRINE STRONGFITNESS --- */
+
+.product-grid {
+    display: flex !important;
+    flex-direction: row;      /* Força os produtos lado a lado */
+    flex-wrap: wrap;          /* Permite quebra de linha em telas pequenas */
+    justify-content: center;  /* Centraliza a vitrine */
+    gap: 30px;                /* Espaçamento entre os cards */
+    padding: 40px 0;
+    width: 100%;
+}
+
+.product-card {
+    flex: 0 1 350px;          /* Largura fixa para manter o alinhamento horizontal */
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+    transition: transform 0.3s ease;
+}
+
+/* Garante que o hover afete apenas o card selecionado */
+.product-card:hover .img-front {
+    opacity: 0;
+}
+
+.product-card:hover .img-model {
+    opacity: 1;
+    transform: scale(1.05); /* Zoom leve sem cortar a cabeça */
+}
+
+
+/* --- ENQUADRAMENTO E EFEITO DE TROCA --- */
+
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3 / 3,5;      /* Proporção vertical de moda */
+    overflow: hidden;
+    background-color: #0c0c0c;
+}
+
+.product-image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center; /* PRIORIDADE: Não corta a cabeça */
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+/* Imagem do modelo começa invisível */
+.img-model {
+    opacity: 0;
+    z-index: 2;
+}
+
+.img-front {
+    opacity: 1;
+    z-index: 1;
+}
+
+/* EFEITO ISOLADO: Afeta apenas o card selecionado */
+.product-card:hover .img-front {
+    opacity: 0;
+}
+
+.product-card:hover .img-model {
+    opacity: 1;
+    transform: scale(1.05); /* Zoom leve para profundidade */
+}
+
+/* --- BOTÃO ADICIONAR (Estilo Verde da Referência) --- */
+
+.add-to-cart {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    background: #cc0303;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    font-size: 0.8rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+    z-index: 10;
+}
+
+.product-card:hover .add-to-cart {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* --- INFORMAÇÕES DO PRODUTO --- */
+
+.product-info {
+    padding: 20px;
+    color: white;
+}
+
+.promo-tag {
+    font-size: 0.7rem;
+    font-weight: bold;
+    color: #ff0000;
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.price-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #fff;
+}
+
+.rating {
+    font-size: 0.9rem;
+    color: #ffb400;
+}
+  
+/* --- RESPONSIVIDADE (MOBILE-FIRST) --- */
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 15px;
+        padding: 15px;
+    } /* Chave do seletor fechada */
+} /* Chave da media query fechada */
+ 
+    header {
+        height: auto;
+        padding: 10px 0;
+    }
+
+    nav ul {
+        gap: 10px;
+    }
+
+    nav ul li a {
+        font-size: 0.8rem;
+        margin: 0 5px;
+    }
+
+    /* Ajuste do Hero (Banner Principal) */
+    .hero-content h2 {
+        font-size: 2rem; /* Diminui o título no celular */
+        padding: 0 10px;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
+    }
+
+    /* Grid de Produtos: 2 colunas no celular para facilitar o scroll */
+  /* --- CORREÇÃO DO GRID DE PRODUTOS --- */
+
+.product-grid {
+    display: flex; /* Mudamos para Flex para garantir a linha horizontal */
+    flex-wrap: wrap; /* Permite quebrar linha apenas se não houver espaço */
+    justify-content: center; /* Centraliza os itens na horizontal */
+    gap: 30px; /* Espaçamento entre os cards */
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 0;
+}
+
+.product-card {
+    flex: 0 1 calc(33.333% - 30px); /* Garante 3 produtos por linha no desktop */
+    min-width: 280px; /* Impede que o card fique pequeno demais */
+    background: #000;
+    border-radius: 12px;
+    transition: 0.3s;
+}
+
+/* Responsividade: 2 colunas em tablets e 1 coluna em celulares pequenos */
+@media (max-width: 992px) {
+    .product-card {
+        flex: 0 1 calc(50% - 30px);
+    }
+}
+
+@media (max-width: 600px) {
+    .product-card {
+        flex: 0 1 100%;
+        max-width: 350px;
+    }
+}
+footer {
+    background-color: #050505;
+    padding: 60px 0 20px 0;
+    border-top: 1px solid var(--accent-red);
+    margin-top: 50px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 40px;
+    align-items: flex-start;
+}
+
+.footer-logo {
+    width: 60px;
+    height: auto;
+    filter: grayscale(100%) invert(100%); /* Ajuste para o logo ficar branco no fundo dark */
+    margin-bottom: 15px;
+}
+
+.footer-brand p {
+    color: var(--text-gray);
+    font-size: 0.9rem;
+}
+
+.footer-links h4, .footer-social h4 {
+    font-family: var(--futuristic-font);
+    color: var(--pure-white);
+    margin-bottom: 20px;
+    font-size: 1rem;
+    letter-spacing: 1px;
+}
+
+.footer-links ul {
+    list-style: none;
+}
+
+.footer-links ul li {
+    margin-bottom: 10px;
+}
+
+.footer-links ul li a {
+    color: var(--text-gray);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: 0.3s;
+}
+
+.footer-links ul li a:hover {
+    color: var(--accent-red);
+    padding-left: 5px;
+}
+
+.social-icons a {
+    color: var(--pure-white);
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.8rem;
+    border: 1px solid var(--text-gray);
+    padding: 8px 15px;
+    margin-right: 10px;
+    transition: 0.3s;
+}
+
+.social-icons a:hover {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.footer-bottom p {
+    color: var(--text-gray);
+    font-size: 0.75rem;
+}
+/* --- HEADER REDESIGN (LAYOUT DE BUSCA) --- */
+
+header {
+    background-color: #050505;
+    padding: 15px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.header-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+/* Estilo do Logo */
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: fit-content;
+}
+
+.logo-img {
+    width: 35px;
+    filter: invert(1); /* Deixa o logo branco se ele for preto */
+}
+
+.logo h1 {
+    font-size: 1.2rem;
+    font-family: var(--futuristic-font);
+    font-style: italic;
+}
+
+/* Barra de Busca (O Coração do Novo Layout) */
+.search-container {
+    flex-grow: 1;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    background: #0f0f0f; /* Um pouco mais escuro para o estilo dark */
+    border: 1px solid #222;
+    border-radius: 50px;
+    padding: 6px 6px 6px 20px; /* Padding interno para o botão não encostar na borda */
+    transition: 0.3s;
+}
+
+#search-input {
+    background: none;
+    border: none;
+    color: #8d99ae; /* Cinza da sua paleta */
+    width: 100%;
+    outline: none;
+    font-size: 0.9rem;
+}
+
+#search-input::placeholder {
+    color: #444; /* Placeholder mais discreto */
+}
+
+.search-btn {
+    background-color: var(--accent-red);
+    border: none;
+    min-width: 44px; /* Tamanho fixo para ser um quadrado */
+    height: 44px;
+    border-radius: 14px; /* O "Squircle" da sua referência */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    background-color: #ef233c; /* Vermelho um pouco mais vibrante no hover */
+}
+
+.search-btn svg {
+    display: block;
+}
+
+/* Botões de Ação */
+.header-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.action-btn {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px; /* Quadrado arredondado */
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    transition: 0.3s;
+}
+
+.action-btn:hover {
+    border-color: var(--accent-red);
+    background: #222;
+}
+
+#cart-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: var(--accent-red);
+    font-size: 0.7rem;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+/* Botões de Ação Quadrados Arredondados */
+.action-btn {
+    background: rgba(255, 255, 255, 0.05); /* Efeito Glassmorphism sutil */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #fff;
+    width: 45px;
+    height: 45px;
+    border-radius: 12px; /* O arredondamento exato da sua foto */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: var(--accent-red);
+}
+
+/* O Contador Vermelho (Badge) */
+#cart-count {
+    position: absolute;
+    top: -5px; /* Flutuando para fora do botão */
+    right: -5px;
+    background-color: var(--accent-red);
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    min-width: 18px;
+    height: 18px;
+    border-radius: 50%; /* Perfeitamente redondo */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid var(--primary-black); /* Borda para dar destaque no fundo dark */
+}
+
+/* Ajuste do Botão de Busca (Lupa no Vermelho) */
+.search-btn {
+    background-color: var(--accent-red);
+    border: none;
+    border-radius: 10px; /* Arredondamento da sua referência */
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    transition: 0.3s;
+}
+
+.search-btn:hover {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+.auth-links {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-right: 15px;
+}
+
+.nav-link-auth {
+    font-family: var(--body-font);
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--pure-white);
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: 0.3s ease;
+}
+
+.nav-link-auth:hover {
+    color: var(--accent-red);
+}
+
+.divider {
+    color: #333;
+    font-size: 0.8rem;
+    user-select: none;
+}
+
+/* Responsividade: Esconder texto em telas muito pequenas para não quebrar o layout */
+@media (max-width: 600px) {
+    .auth-links {
+        display: none;
+    }
+}
+/* Container da Imagem */
+.product-image-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 3/4;
+    background-color: #f9f9f9; /* Fundo claro para destacar o produto */
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.product-image-wrapper img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.6s ease-in-out, transform 0.6s ease;
+}
+
+/* Imagem do modelo escondida por padrão */
+.img-model {
+    opacity: 0;
+}
+
+/* Troca de Imagem no Hover */
+.product-card:hover .img-front {
+    opacity: 0;
+}
+
+.product-card:hover .img-model {
+    opacity: 1;
+    transform: scale(1.05); /* Zoom sutil para profundidade */
+}
+
+/* Botão de Adicionar Rápido (Verde da Referência) */
+.quick-add {
+    position: absolute;
+    bottom: 15px;
+    right: 15px;
+    background: #1b5e20; /* Tom verde escuro profissional */
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: 0.3s;
+    z-index: 5;
+}
+
+.product-card:hover .quick-add {
+    opacity: 1;
+    transform: translateY(0);
+}
+/* Container que segura os produtos */
+.product-grid {
+    display: flex;
+    flex-direction: row; /* Força a horizontal */
+    flex-wrap: wrap;     /* Permite quebrar linha em telas menores */
+    justify-content: center;
+    gap: 40px;           /* Espaçamento entre os cards */
+    padding: 50px 20px;
+}
+
+/* Tamanho fixo para cada card de produto */
+.product-card {
+    flex: 0 1 350px;     /* Largura base de 350px */
+    display: flex;
+    flex-direction: column;
+}

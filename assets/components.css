@@ -1,0 +1,31 @@
+/* Efeito de Vidro no Header ao rolar */
+header.scrolled {
+    background: rgba(0, 0, 0, 0.95);
+    padding: 10px 0;
+    border-bottom: 2px solid var(--red);
+}
+
+/* Tipografia de Tagline */
+.tagline {
+    color: var(--red);
+    font-weight: 700;
+    letter-spacing: 3px;
+    font-size: 0.9rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+/* Botão Secundário (Vazado) */
+.btn-secondary {
+    padding: 18px 40px;
+    border: 1px solid var(--white);
+    color: var(--white);
+    text-decoration: none;
+    font-weight: 700;
+    transition: var(--transition);
+}
+
+.btn-secondary:hover {
+    background: var(--white);
+    color: var(--black);
+}

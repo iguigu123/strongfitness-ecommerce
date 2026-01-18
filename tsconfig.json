@@ -1,0 +1,22 @@
+
+{
+  "compilerOptions": {
+    /* Configurações de Saída */
+    "target": "ES6",
+    "module": "ESNext",
+    "rootDir": "./src",
+    "outDir": "./assets/js",
+    
+    /* Rigor e Segurança */
+    "strict": true,
+    "skipLibCheck": true,
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    
+    /* Outros */
+    "sourceMap": true,
+    "declaration": false
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules"]
+}
