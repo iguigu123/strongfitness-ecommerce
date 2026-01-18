@@ -115,6 +115,63 @@ header.scroll-active {
     display: flex;
     align-items: center;
 }
+.header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* Alinha tudo no centro vertical */
+    height: 80px;        /* Define uma altura fixa para evitar que os itens "caiam" */
+    padding: 0 20px;
+    position: relative;
+}
+
+/* Define que as laterais ocupam o mesmo espaço para centralizar o meio */
+.header-left, .header-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+}
+.header-right {
+    display: flex;
+    align-items: center; /* Alinha Login e Carrinho no centro */
+    gap: 15px;
+    height: 100%;        /* Garante que o bloco ocupe a altura do header */
+}
+
+/* O centro ganha destaque e centralização */
+.header-center {
+    flex: 2; 
+    display: flex;
+    justify-content: center;
+}
+header-icon-btn {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #fff;
+    cursor: pointer;
+    padding: 5px;
+    /* Remove margens que possam estar empurrando o botão para baixo */
+    margin: 0; 
+}
+
+.search-bar {
+    width: 100%;
+    max-width: 450px;
+    display: flex;
+    background: #111;
+    border: 1px solid #333;
+    padding: 5px 15px;
+    border-radius: 4px;
+}
+
+.search-bar input {
+    background: transparent;
+    border: none;
+    color: #fff;
+    width: 100%;
+    outline: none;
+}
 
 .cart-icon {
     background: none;
@@ -614,7 +671,7 @@ footer {
 .footer-logo {
     width: 60px;
     height: auto;
-    filter: grayscale(100%) invert(100%); /* Ajuste para o logo ficar branco no fundo dark */
+    border-radius: 50%;
     margin-bottom: 15px;
 }
 
@@ -706,7 +763,8 @@ header {
 
 .logo-img {
     width: 35px;
-    filter: invert(1); /* Deixa o logo branco se ele for preto */
+    border-radius: 50%;
+    
 }
 
 .logo h1 {
@@ -1006,4 +1064,370 @@ header {
     #produtos .product-grid {
         grid-template-columns: 1fr;
     }
+}
+/* --- MODAL DE AUTENTICAÇÃO --- */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px); /* Efeito Glassmorphism */
+    display: none; /* Escondido por padrão */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-content {
+    background: #111;
+    padding: 40px;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #333;
+    position: relative;
+    text-align: center;
+}
+
+.auth-tabs {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    border-bottom: 1px solid #222;
+}
+
+.tab-btn {
+    background: none;
+    border: none;
+    color: #666;
+    padding: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.tab-btn.active {
+    color: var(--accent-red);
+    border-bottom: 2px solid var(--accent-red);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    background: #1a1a1a;
+    border: 1px solid #333;
+    color: white;
+    border-radius: 5px;
+}
+
+.btn-primary {
+    width: 100%;
+    padding: 12px;
+    background: var(--accent-red);
+    border: none;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.auth-form {
+    display: none;
+}
+
+.auth-form.active {
+    display: block;
+}
+.video-section {
+    width: 100%;
+    overflow: hidden; /* Evita barras de rolagem horizontais */
+    line-height: 0;   /* Remove espaços fantasmas na base do vídeo */
+}
+
+.video-container {
+    width: 100vw;    /* Força 100% da largura da tela */
+    height: 150vh;    /* Altura ajustável (60% da altura da tela é o padrão para banners) */
+    position: relative;
+}
+
+.bg-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* ESSENCIAL: Preenche toda a largura sem distorcer */
+    object-position: center;
+}
+
+.video-container {
+    position: relative;
+    width: 100vw;
+    height: 60vh;
+    overflow: hidden;
+}
+
+.video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.4); /* Leve escurecimento para leitura do texto */
+    
+    /* CENTRALIZAÇÃO DA FRASE */
+    display: flex;
+    flex-direction: column; /* Para empilhar o texto e o botão */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center;     /* Centraliza horizontalmente */
+    text-align: center;
+}
+
+.video-overlay h2 {
+    color: #fff;
+    font-size: 4rem; /* Tamanho grande para impacto */
+    text-transform: uppercase;
+    letter-spacing: 6px; /* Espaçamento entre as letras para agressividade */
+    margin-bottom: 30px; /* Espaço entre a frase e o botão */
+    line-height: 1.1;
+    text-shadow: 3px 3px 10px rgba(0,0,0,0.7); /* Sombra para destacar */
+    
+    /* FONTE AGRESSIVA: Use uma fonte que você já tenha carregado */
+    /* Exemplo: Se tiver uma fonte como 'Oswald' ou 'Bebas Neue' */
+    font-family: 'Bebas Neue', Impact, sans-serif; /* SUBSTITUA PELA SUA FONTE OU MANTENHA O PADRÃO */
+}
+
+.video-overlay .highlight {
+    color: var(--accent-red); /* Cor vermelha para o destaque do ano */
+}
+
+/* O Botão agora precisa ser posicionado no FINAL do container, 
+   mas ainda dentro do overlay que centraliza a frase */
+.btn-primary-video {
+    position: absolute; /* Posição absoluta dentro do overlay */
+    bottom: 0;           /* Fixa na borda inferior do overlay */
+    left: 0;
+    width: 100vw;        /* Largura total da tela */
+    padding: 20px 0;
+    background-color: var(--accent-red);
+    color: #fff;
+    border: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 0;
+    transition: background 0.3s ease;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 768px) {
+    .video-overlay h2 {
+        font-size: 2.5rem;
+        letter-spacing: 3px;
+    }
+}
+.faq-section {
+    padding: 80px 0;
+    background-color: #050505;
+}
+
+.faq-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.faq-item {
+    border-bottom: 1px solid #1a1a1a;
+    margin-bottom: 10px;
+}
+
+.faq-question {
+    width: 100%;
+    padding: 25px 0;
+    background: none;
+    border: none;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: bold;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    cursor: pointer;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.faq-question:hover {
+    color: var(--accent-red);
+}
+
+.faq-answer {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.4s ease-out;
+}
+
+.faq-answer p {
+    padding-bottom: 25px;
+    color: #888;
+    line-height: 1.6;
+}
+
+.faq-item.active .faq-answer {
+    max-height: 200px; /* Altura suficiente para o texto */
+}
+
+.faq-item.active .faq-icon {
+    transform: rotate(45deg);
+    color: var(--accent-red);
+}
+
+.faq-icon {
+    font-size: 1.5rem;
+    transition: 0.3s;
+}
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 50px;
+    border-bottom: 1px solid #1a1a1a;
+    padding-bottom: 20px;
+}
+
+/* Estilo do Botão de Filtro (Select Customizado) */
+.filter-select {
+    background: #111;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 12px 25px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+    transition: 0.3s;
+}
+
+.filter-select:hover {
+    border-color: var(--accent-red);
+    color: var(--accent-red);
+}
+
+/* Grid ocupando 100% sem a barra lateral */
+.products-page .product-grid {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+/* Base para todos os botões de ação do Header */
+.header-icon-btn {
+    background: none;
+    border: none;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: 0.3s;
+    padding: 8px 12px;
+}
+
+.header-icon-btn i {
+    font-size: 1.5rem; /* Tamanho do ícone */
+}
+
+.header-icon-btn:hover {
+    color: var(--accent-red); /* O vermelho da Strong Fitness */
+    transform: translateY(-2px);
+}
+
+/* Ajuste específico para o texto do Login se quiser que ele pareça um link */
+.header-link-login span {
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.hero-products {
+    width: 100%;
+    height: 70vh; /* Altura de Hero (70% da altura da tela) */
+    background: url('assets/img/banner/banner-header-produto2.png') no-repeat center center;
+    background-size: cover;
+    position: relative;
+    border-bottom: 3px solid var(--accent-red);
+}
+
+.hero-overlay {
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6); /* Overlay para dar foco ao texto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.hero-content {
+    max-width: 800px;
+}
+
+.hero-subtitle {
+    color: var(--accent-red);
+    font-weight: bold;
+    letter-spacing: 5px;
+    font-size: 1rem;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 5rem;
+    color: #fff;
+    line-height: 0.9;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.hero-description {
+    color: #ccc;
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+}
+
+.btn-hero-scroll {
+    padding: 15px 40px;
+    background: #fff;
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    transition: 0.3s;
+}
+
+.btn-hero-scroll:hover {
+    background: var(--accent-red);
+    color: #fff;
+}
+/* Força o empilhamento vertical na página de produtos */
+.products-page-body {
+    display: flex;
+    flex-direction: column; /* Isso faz um ficar embaixo do outro */
+    min-height: 100vh;
+    margin: 0;
+    overflow-x: hidden;
+}
+
+header, 
+.hero-products, 
+.catalog-grid {
+    width: 100%; /* Garante que todos tomem a tela toda na horizontal */
+    display: block;
 }

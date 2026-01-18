@@ -16,16 +16,27 @@
             <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img">
             <h1>STRONG<span>FITNESS</span></h1>
         </div>
+        <div>
+    </div>
 
-        <div class="search-container">
-    <input type="text" placeholder="Buscar produtos..." id="search-input">
-    <button type="submit" class="search-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-            <circle cx="11" cy="11" r="8"></circle>
-            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-        </svg>
-    </button>
-</div>
+        <div class="header-center">
+            <div class="search-bar">
+                <input type="text" placeholder="BUSCAR PRODUTO...">
+                <button type="submit"><i class="ph ph-magnifying-glass"></i></button>
+            </div>
+        </div>
+
+        <div class="header-right header-actions">
+            <button class="header-icon-btn header-link-login" id="open-auth">
+                <i class="ph ph-user"></i>
+                <span>LOGIN</span>
+            </button>
+            <button class="header-icon-btn" id="open-cart">
+                <i class="ph ph-user"></i>
+                <span class="cart-count">CRIAR CONTA</span>
+            </button>
+        </div>
+    </div>
         <div class="header-actions">
     <button class="action-btn user-btn">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
@@ -48,6 +59,61 @@
     </div>
 </section>
   <script type="module" src="assets/js/main.js"></script>
+  <div 
+    id="auth-modal" class="modal-overlay">
+    <div class="modal-content">
+        <button id="close-modal" class="close-btn">&times;</button>
+        
+        <div class="auth-tabs">
+            <button class="tab-btn active" data-tab="login">LOGIN</button>
+            <button class="tab-btn" data-tab="register">CADASTRO</button>
+        </div>
+        
+
+        <form id="login-form" class="auth-form active">
+            <div class="input-group">
+                <input type="email" placeholder="E-mail" required>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="btn-primary">ENTRAR NA CONTA</button>
+            <a href="#" class="forgot-password">Esqueceu a senha?</a>
+        </form>
+
+        <form id="register-form" class="auth-form">
+            <div class="input-group">
+                <input type="text" placeholder="Nome Completo" required>
+            </div>
+            <div class="input-group">
+                <input type="email" placeholder="E-mail" required>
+            </div>
+            <div class="input-group">
+                <input type="password" placeholder="Crie uma Senha" required>
+            </div>
+            <button type="submit" class="btn-primary">CRIAR MINHA CONTA</button>
+        </form>
+    </div>
+</div>
+<div id="auth-modal" style="display: none;">
+    <div class="modal-content">
+        <button id="close-modal">X</button>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="login">Login</button>
+            <button class="tab-btn" data-tab="register">Cadastro</button>
+        </div>
+
+        <form id="login-form" class="auth-form active">
+            <!-- campos login -->
+        </form>
+
+        <form id="register-form" class="auth-form">
+            <!-- campos cadastro -->
+        </form>
+    </div>
+</div>
+
 </body>
 
    <section id="produtos" class="container section-padding">
@@ -140,6 +206,57 @@
             
      
 </section>
+<section class="video-section">
+    <div class="video-container">
+        
+        <video autoplay muted loop playsinline class="bg-video">
+            <source src="assets/img/videos/homem-frente-costas-marrom.mp4" type="video/mp4">
+            Seu navegador não suporta vídeos.
+        </video>
+        <div class="video-overlay">
+            <h2>NEW COLLECTION <span class="highlight">2026</span></h2>
+            <button class="btn-primary-video">VER AGORA</button>
+    </div>
+        </div>
+    </div>
+</section>
+<section id="faq" class="faq-section">
+    <div class="container">
+        <h2 class="section-title">PERGUNTAS <span class="highlight">FREQUENTES</span></h2>
+        
+        <div class="faq-container">
+            <div class="faq-item">
+                <button class="faq-question">
+                    QUAL O PRAZO DE ENTREGA?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>O prazo médio é de 5 a 10 dias úteis, dependendo da sua região. Você receberá um código de rastreio em até 48h após a confirmação do pagamento.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    A MODELAGEM É REALMENTE OVERSIZED?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Sim! Nossas peças são desenvolvidas com tecido oversized premium, caimento pensado tanto para seus treinos, quanto para o dia a dia.</p>
+                </div>
+            </div>
+
+            <div class="faq-item">
+                <button class="faq-question">
+                    COMO FUNCIONA A POLÍTICA DE TROCAS?
+                    <span class="faq-icon">+</span>
+                </button>
+                <div class="faq-answer">
+                    <p>Você tem até 7 dias após o recebimento para solicitar a troca através do nosso suporte via WhatsApp.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 <footer>
     <div class="container footer-grid">
         <div class="footer-brand">
@@ -159,8 +276,10 @@
         <div class="footer-social">
             <h4>CONNECT</h4>
             <div class="social-icons">
-                <a href="#">INSTAGRAM</a>
-                <a href="#">TIKTOK</a>
+                <img src="assets/img/logo/instagram.jpg" alt="Logo instagram" class="footer-logo">
+                <img src="assets/img/logo/whatsapp.jpg" alt="Logo whatsapp" class="footer-logo">
+                <img src="assets/img/logo/tiktok.png" alt="Logo tiktok" class="footer-logo">
+               
             </div>
         </div>
     </div>
