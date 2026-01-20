@@ -160,5 +160,37 @@
     </footer>
 
     <script type="module" src="assets/js/main.js"></script>
+    
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal" class="close-btn">&times;</button>
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">LOGIN</button>
+                <button class="tab-btn" data-tab="register">CADASTRO</button>
+            </div>
+            <form id="login-form" class="auth-form active">
+                <div class="input-group">
+                    <input type="email" placeholder="E-mail" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="btn-primary">ENTRAR NA CONTA</button>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </form>
+            <form id="register-form" class="auth-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Nome Completo" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="E-mail" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Crie uma Senha" required>
+                </div>
+                <button type="submit" class="btn-primary">CRIAR MINHA CONTA</button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>

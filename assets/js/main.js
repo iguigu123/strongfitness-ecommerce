@@ -201,16 +201,73 @@ window.addEventListener('scroll', () => {
         header === null || header === void 0 ? void 0 : header.classList.remove('scroll-active');
     }
 });
-const searchInput = document.getElementById('search-input');
-searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('keyup', (e) => {
-    if (e.key === 'Enter') {
-        console.log("Buscando por:", searchInput.value);
-        const searchTerm = searchInput.value.trim();
+
+// Sidebar Mobile Toggle
+document.addEventListener('DOMContentLoaded', () => {
+    const navToggleBtns = document.querySelectorAll('.nav-toggle-btn');
+    const mainNavMobile = document.getElementById('main-nav-mobile');
+    const closeNavMobile = document.getElementById('close-nav-mobile');
+
+    if (navToggleBtns && mainNavMobile) {
+        navToggleBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                mainNavMobile.classList.add('active');
+            });
+        });
+    }
+
+    if (closeNavMobile && mainNavMobile) {
+        closeNavMobile.addEventListener('click', () => {
+            mainNavMobile.classList.remove('active');
+        });
+    }
+
+    // Search functionality for all pages
+    const searchInput = document.getElementById('search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    
+    if (searchBtn && searchInput) {
+        const performSearch = () => {
+            const query = searchInput.value.trim();
+            if (query) {
+                window.location.href = `produto.html?search=${encodeURIComponent(query)}#catalogo`;
+            }
+        };
+
+        searchBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            performSearch();
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                performSearch();
+            }
+        });
+    }
+
+    // Filter products on produto.html if search param exists
+    if (window.location.pathname.includes('produto.html')) {
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchTerm = urlParams.get('search');
+        const productCards = document.querySelectorAll('.product-card');
+
         if (searchTerm) {
-            window.location.href = `produto.html?search=${encodeURIComponent(searchTerm)}`;
+            const decodedSearchTerm = decodeURIComponent(searchTerm).toLowerCase();
+            productCards.forEach(card => {
+                const productName = card.querySelector('.product-info h3')?.textContent.toLowerCase();
+                if (productName && productName.includes(decodedSearchTerm)) {
+                    card.style.display = ''; // Show the card
+                } else {
+                    card.style.display = 'none'; // Hide the card
+                }
+            });
         }
     }
 });
+
 // Seletores de Elementos
 const authModal = document.getElementById('auth-modal');
 const loginBtn = document.querySelector('.header-link-login'); // Link que abre a modal

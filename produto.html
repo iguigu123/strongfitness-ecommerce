@@ -288,24 +288,5 @@
     </footer>
 
     <script type="module" src="assets/js/main.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const searchTerm = urlParams.get('search');
-            const productCards = document.querySelectorAll('.product-card');
-
-            if (searchTerm) {
-                const decodedSearchTerm = decodeURIComponent(searchTerm).toLowerCase();
-                productCards.forEach(card => {
-                    const productName = card.querySelector('.product-info h3')?.textContent.toLowerCase();
-                    if (productName && productName.includes(decodedSearchTerm)) {
-                        card.style.display = ''; // Show the card
-                    } else {
-                        card.style.display = 'none'; // Hide the card
-                    }
-                });
-            }
-        });
-    </script>
 </body>
 </html>
