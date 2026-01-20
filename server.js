@@ -45,30 +45,43 @@ const server = http.createServer((req, res) => {
     }
     fs.stat(fsPath, (err, stat) => {
       if (err) {
-        res.statusCode = 404;
-        res.end('Not Found');
+        // Tenta adicionar .html para Clean URLs
+        const htmlPath = fsPath + '.html';
+        fs.stat(htmlPath, (htmlErr, htmlStat) => {
+          if (!htmlErr && htmlStat.isFile()) {
+            serveFile(htmlPath, res);
+          } else {
+            res.statusCode = 404;
+            res.end('Not Found');
+          }
+        });
         return;
       }
+      
       let filePath = fsPath;
       if (stat.isDirectory()) filePath = path.join(fsPath, 'index.html');
-      fs.readFile(filePath, (readErr, data) => {
-        if (readErr) {
-          res.statusCode = 404;
-          res.end('Not Found');
-          return;
-        }
-        const ext = path.extname(filePath).toLowerCase();
-        const type = mime[ext] || 'application/octet-stream';
-        res.setHeader('Content-Type', type);
-        res.statusCode = 200;
-        res.end(data);
-      });
+      serveFile(filePath, res);
     });
   } catch {
     res.statusCode = 500;
     res.end('Internal Server Error');
   }
 });
+
+function serveFile(filePath, res) {
+  fs.readFile(filePath, (readErr, data) => {
+    if (readErr) {
+      res.statusCode = 404;
+      res.end('Not Found');
+      return;
+    }
+    const ext = path.extname(filePath).toLowerCase();
+    const type = mime[ext] || 'application/octet-stream';
+    res.setHeader('Content-Type', type);
+    res.statusCode = 200;
+    res.end(data);
+  });
+}
 
 server.listen(port, () => {
   console.log(`Preview disponível em http://localhost:${port}/`);

@@ -3,36 +3,30 @@
 let cart = JSON.parse(localStorage.getItem('strong_cart') || '[]');
 const cartCountElement = document.getElementById('cart-count');
 const cartTotalElement = document.getElementById('cart-total');
-
 function atualizarInterface() {
     // Atualiza o contador do cabeçalho
     const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
     if (cartCountElement) {
         cartCountElement.innerText = totalItems.toString();
     }
-    
     // Atualiza o total no modal
     const totalPrice = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
     if (cartTotalElement) {
         cartTotalElement.innerText = totalPrice.toFixed(2);
     }
-
     localStorage.setItem('strong_cart', JSON.stringify(cart));
     localStorage.setItem('cartCount', totalItems.toString());
-
     // Renderiza itens no Modal do Carrinho
     const cartItemsContainer = document.querySelector('#cart-modal .cart-items');
     if (cartItemsContainer) {
         renderCartItems(cartItemsContainer);
     }
-
     // Renderiza itens na página de Carrinho (carrinho.html)
     const fullCartContainer = document.querySelector('.cart-page .cart-items');
     if (fullCartContainer) {
         renderCartItems(fullCartContainer);
         updateCartSummary();
     }
-
     // Renderiza itens no resumo do Checkout (checkout.html)
     const checkoutSummaryContainer = document.getElementById('checkout-summary-items');
     if (checkoutSummaryContainer) {
@@ -40,7 +34,6 @@ function atualizarInterface() {
         updateCartSummary();
     }
 }
-
 function renderCartItems(container) {
     if (cart.length > 0) {
         container.innerHTML = cart.map((item, index) => `
@@ -65,57 +58,50 @@ function renderCartItems(container) {
                 </div>
             </div>
         `).join('');
-    } else {
+    }
+    else {
         container.innerHTML = `<p>Seu carrinho está vazio.</p>`;
     }
 }
-
 function updateCartSummary() {
+    var _a;
     const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
-    
     // Atualiza elementos da página de carrinho
     const summaryRows = document.querySelectorAll('.cart-summary .summary-row span:last-child');
     const totalRow = document.querySelector('.summary-total span:last-child');
-    
     if (summaryRows.length >= 1) {
         summaryRows[0].innerText = `R$ ${subtotal.toFixed(2)}`;
     }
     if (totalRow) {
         totalRow.innerText = `R$ ${subtotal.toFixed(2)}`;
     }
-
     // Atualiza elementos da página de checkout e frete
     const checkoutSubtotal = document.getElementById('summary-subtotal');
     const checkoutTotal = document.getElementById('summary-total');
     const checkoutDiscount = document.getElementById('summary-discount');
     const checkoutShipping = document.querySelector('.summary-frete');
-
     if (checkoutSubtotal) {
         checkoutSubtotal.innerText = `R$ ${subtotal.toFixed(2)}`;
     }
-
     // Lógica específica para página de frete
     let shippingValue = 0;
     let discountValue = 0;
-
     if (document.body.classList.contains('frete-page')) {
         const selectedRadio = document.querySelector('.shipping-option input[type="radio"]:checked');
         if (selectedRadio) {
             const container = selectedRadio.closest('.shipping-option');
-            const priceEl = container.querySelector('.ship-price');
+            const priceEl = container === null || container === void 0 ? void 0 : container.querySelector('.ship-price');
             if (priceEl) {
-                const priceTxt = priceEl.textContent.replace('R$', '').replace(',', '.').trim();
+                const priceTxt = ((_a = priceEl.textContent) === null || _a === void 0 ? void 0 : _a.replace('R$', '').replace(',', '.').trim()) || '0';
                 shippingValue = parseFloat(priceTxt) || 0;
             }
         }
-
         // Exemplo de regra: frete grátis acima de R$ 199
         if (subtotal >= 199) {
             discountValue = shippingValue;
             shippingValue = 0;
         }
     }
-
     if (checkoutShipping) {
         checkoutShipping.innerText = `R$ ${shippingValue.toFixed(2).replace('.', ',')}`;
     }
@@ -127,8 +113,7 @@ function updateCartSummary() {
         checkoutTotal.innerText = `R$ ${finalTotal.toFixed(2).replace('.', ',')}`;
     }
 }
-
-// Funções globais para o carrinho
+// @ts-ignore
 window.updateQuantity = (index, delta) => {
     cart[index].quantity += delta;
     if (cart[index].quantity <= 0) {
@@ -136,59 +121,120 @@ window.updateQuantity = (index, delta) => {
     }
     atualizarInterface();
 };
-
+// @ts-ignore
 window.removeFromCart = (index) => {
     cart.splice(index, 1);
     atualizarInterface();
 };
-
 // Inicializa a interface
 atualizarInterface();
+// Lógica de frete na página de frete
+if (document.body.classList.contains('frete-page')) {
+    const radios = document.querySelectorAll('.shipping-option input[type="radio"]');
+    radios.forEach(r => r.addEventListener('change', () => {
+        updateCartSummary();
+    }));
+}
 
-// Lógica para seleção de tamanho
-const sizeOptions = document.querySelectorAll('.size-option');
-sizeOptions.forEach(opt => {
-    opt.addEventListener('click', () => {
-        sizeOptions.forEach(o => o.classList.remove('selected'));
-        opt.classList.add('selected');
+// Lógica para os botões de "Adicionar rápido" (abrir detalhes)
+const quickAddBtns = document.querySelectorAll('.add-to-cart');
+const productDetailSection = document.getElementById('product-detail');
+
+quickAddBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const card = btn.closest('.product-card');
+        if (!card || !productDetailSection) return;
+
+        // Extrai dados do card
+        const name = card.querySelector('h3').textContent;
+        const priceStr = card.querySelector('.price').textContent;
+        const frontImg = card.querySelector('.img-front').getAttribute('src');
+        
+        // Deriva imagem de costas (substituindo FRENTE por COSTAS)
+        const backImg = frontImg.replace('FRENTE', 'COSTAS');
+
+        // Popula a seção de detalhes
+        productDetailSection.querySelector('.detail-title').textContent = name;
+        productDetailSection.querySelector('.detail-price').textContent = priceStr;
+        
+        const detailFront = productDetailSection.querySelector('.detail-image-front');
+        const detailBack = productDetailSection.querySelector('.detail-image-back');
+        
+        detailFront.src = frontImg;
+        detailFront.alt = `${name} (Frente)`;
+        detailBack.src = backImg;
+        detailBack.alt = `${name} (Costas)`;
+
+        // Resetar galeria para mostrar a frente por padrão
+        detailFront.classList.add('is-active');
+        detailBack.classList.remove('is-active');
+        const dots = productDetailSection.querySelectorAll('.detail-dot');
+        dots.forEach(d => d.classList.remove('active'));
+        productDetailSection.querySelector('.dot-front')?.classList.add('active');
+
+        // Mostrar a seção e scroll
+        productDetailSection.classList.remove('hidden');
+        productDetailSection.scrollIntoView({ behavior: 'smooth' });
     });
 });
 
-// Seleciona botões de adicionar
-const botoesAdicionar = Array.from(document.querySelectorAll('.add-to-cart, .cta-buy')).filter((b) => {
-    const isCarousel = b.closest('.products-carousel');
-    const isLink = b.tagName.toLowerCase() === 'a';
-    return !isCarousel && !isLink;
-});
-
-botoesAdicionar.forEach((botao) => {
+// Seleciona apenas os botões que realmente adicionam ao carrinho (CTA de compra)
+const botoesComprar = document.querySelectorAll('.cta-buy');
+botoesComprar.forEach((botao) => {
     botao.addEventListener('click', (e) => {
+        var _a, _b, _c;
         e.preventDefault();
-        
-        const card = botao.closest('.product-card') || botao.closest('.product-detail');
+        const card = botao.closest('.product-detail');
         if (!card) return;
-
-        const name = card.querySelector('h3, .detail-title')?.textContent || 'Produto';
-        const priceStr = card.querySelector('.price, .detail-price')?.textContent || '0';
+        
+        const name = ((_a = card.querySelector('.detail-title')) === null || _a === void 0 ? void 0 : _a.textContent) || 'Produto';
+        const priceStr = ((_b = card.querySelector('.detail-price')) === null || _b === void 0 ? void 0 : _b.textContent) || '0';
         const price = parseFloat(priceStr.replace('R$', '').replace(',', '.').trim());
-        const image = card.querySelector('img')?.getAttribute('src') || '';
+        const image = ((_c = card.querySelector('.detail-image-front')) === null || _c === void 0 ? void 0 : _c.getAttribute('src')) || '';
         
         // Busca o tamanho selecionado
         let size = 'M'; // Padrão
         const selectedSize = card.querySelector('.size-option.selected');
         if (selectedSize) {
-            size = selectedSize.textContent;
+            size = selectedSize.textContent || 'M';
         }
-
+        
         const existingItem = cart.find(item => item.name === name && item.size === size);
         if (existingItem) {
             existingItem.quantity++;
-        } else {
+        }
+        else {
             cart.push({ name, price, image, size, quantity: 1 });
         }
-
+        
         atualizarInterface();
         alert("Produto adicionado ao carrinho!");
+    });
+});
+// Lógica para abrir a barra lateral (menu mobile) ao clicar na logo
+const logoImg = document.querySelector('.logo-img');
+const mainNavMobile = document.getElementById('main-nav-mobile');
+const closeNavMobile = document.getElementById('close-nav-mobile');
+
+if (logoImg && mainNavMobile) {
+    logoImg.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mainNavMobile.classList.add('active');
+    });
+}
+
+if (closeNavMobile && mainNavMobile) {
+    closeNavMobile.addEventListener('click', () => {
+        mainNavMobile.classList.remove('active');
+    });
+}
+
+// Fechar menu mobile ao clicar em um link
+const mobileLinks = mainNavMobile?.querySelectorAll('a');
+mobileLinks?.forEach(link => {
+    link.addEventListener('click', () => {
+        mainNavMobile?.classList.remove('active');
     });
 });
 // Efeito de mudar o header no scroll
@@ -201,109 +247,118 @@ window.addEventListener('scroll', () => {
         header === null || header === void 0 ? void 0 : header.classList.remove('scroll-active');
     }
 });
+// Lógica do Carrinho (Modal)
+const cartBtn = document.getElementById('cart-btn');
+const closeCartModal = document.getElementById('close-cart-modal');
+const cartModal = document.getElementById('cart-modal');
+const checkoutBtn = document.getElementById('checkout-btn');
 
-// Sidebar Mobile Toggle
-document.addEventListener('DOMContentLoaded', () => {
-    const navToggleBtns = document.querySelectorAll('.nav-toggle-btn');
-    const mainNavMobile = document.getElementById('main-nav-mobile');
-    const closeNavMobile = document.getElementById('close-nav-mobile');
+if (cartBtn && cartModal) {
+    cartBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        cartModal.classList.add('active');
+    });
+}
 
-    if (navToggleBtns && mainNavMobile) {
-        navToggleBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.preventDefault();
-                mainNavMobile.classList.add('active');
-            });
-        });
+if (closeCartModal && cartModal) {
+    closeCartModal.addEventListener('click', () => {
+        cartModal.classList.remove('active');
+    });
+}
+
+if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', () => {
+        const isPageInAdmin = window.location.pathname.includes('/admin/');
+        window.location.href = isPageInAdmin ? '../carrinho.html' : 'carrinho.html';
+    });
+}
+
+// Fechar modal ao clicar fora
+window.addEventListener('click', (e) => {
+    if (e.target === cartModal) {
+        cartModal.classList.remove('active');
     }
+});
 
-    if (closeNavMobile && mainNavMobile) {
-        closeNavMobile.addEventListener('click', () => {
-            mainNavMobile.classList.remove('active');
-        });
-    }
+const searchInput = document.getElementById('search-input');
+const searchBtn = document.querySelector('.search-btn');
 
-    // Search functionality for all pages
-    const searchInput = document.getElementById('search-input');
-    const searchBtn = document.querySelector('.search-btn');
-    
-    if (searchBtn && searchInput) {
-        const performSearch = () => {
+if (searchBtn && searchInput) {
+    const performSearch = () => {
             const query = searchInput.value.trim();
             if (query) {
-                window.location.href = `produto.html?search=${encodeURIComponent(query)}#catalogo`;
+                window.location.href = `/produto?search=${encodeURIComponent(query)}#catalogo`;
             }
         };
 
-        searchBtn.addEventListener('click', (e) => {
+    searchBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        performSearch();
+    });
+
+    searchInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
             e.preventDefault();
             performSearch();
-        });
-
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                performSearch();
-            }
-        });
-    }
-
-    // Filter products on produto.html if search param exists
-    if (window.location.pathname.includes('produto.html')) {
-        const urlParams = new URLSearchParams(window.location.search);
-        const searchTerm = urlParams.get('search');
-        const productCards = document.querySelectorAll('.product-card');
-
-        if (searchTerm) {
-            const decodedSearchTerm = decodeURIComponent(searchTerm).toLowerCase();
-            productCards.forEach(card => {
-                const productName = card.querySelector('.product-info h3')?.textContent.toLowerCase();
-                if (productName && productName.includes(decodedSearchTerm)) {
-                    card.style.display = ''; // Show the card
-                } else {
-                    card.style.display = 'none'; // Hide the card
-                }
-            });
         }
-    }
-});
-
+    });
+}
 // Seletores de Elementos
 const authModal = document.getElementById('auth-modal');
-const loginBtn = document.querySelector('.header-link-login'); // Link que abre a modal
-const registerBtn = document.getElementById('open-register'); // Botão que abre a modal para cadastro
+const loginBtns = document.querySelectorAll('.header-link-login'); // Todos os botões que abrem o login
+const registerBtns = document.querySelectorAll('#open-register'); // Botões que abrem o cadastro
 const closeModal = document.getElementById('close-modal');
 const tabBtns = document.querySelectorAll('.tab-btn');
 const authForms = document.querySelectorAll('.auth-form');
-// 1. Abrir Modal (Login)
-loginBtn === null || loginBtn === void 0 ? void 0 : loginBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (authModal) {
-        authModal.style.display = 'flex';
-        // Garante que a aba de login esteja ativa por padrão
-        tabBtns.forEach(b => b.classList.remove('active'));
-        authForms.forEach(f => f.classList.remove('active'));
-        document.querySelector('.tab-btn[data-tab="login"]')?.classList.add('active');
-        document.getElementById('login-form')?.classList.add('active');
-    }
+
+// Função para abrir o modal em uma aba específica
+const openAuthModal = (tab = 'login') => {
+    if (!authModal) return;
+    authModal.style.display = 'flex';
+    
+    // Alterna para a aba correta
+    tabBtns.forEach(btn => {
+        if (btn.getAttribute('data-tab') === tab) {
+            btn.classList.add('active');
+        } else {
+            btn.classList.remove('active');
+        }
+    });
+    
+    authForms.forEach(form => {
+        if (form.id === `${tab}-form`) {
+            form.classList.add('active');
+        } else {
+            form.classList.remove('active');
+        }
+    });
+};
+
+// 1. Abrir Modal via botões de Login
+loginBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAuthModal('login');
+    });
 });
-// 1. Abrir Modal (Cadastro)
-registerBtn === null || registerBtn === void 0 ? void 0 : registerBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-    if (authModal) {
-        authModal.style.display = 'flex';
-        // Ativa a aba de cadastro
-        tabBtns.forEach(b => b.classList.remove('active'));
-        authForms.forEach(f => f.classList.remove('active'));
-        document.querySelector('.tab-btn[data-tab="register"]')?.classList.add('active');
-        document.getElementById('register-form')?.classList.add('active');
-    }
+
+// Abrir Modal via botões de Cadastro
+registerBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        openAuthModal('register');
+    });
 });
+
 // 2. Fechar Modal (No X ou clicando fora)
-closeModal === null || closeModal === void 0 ? void 0 : closeModal.addEventListener('click', () => authModal.style.display = 'none');
+closeModal === null || closeModal === void 0 ? void 0 : closeModal.addEventListener('click', () => {
+    if (authModal) authModal.style.display = 'none';
+});
+
 window.addEventListener('click', (e) => {
-    if (e.target === authModal)
+    if (e.target === authModal) {
         authModal.style.display = 'none';
+    }
 });
 // 3. Alternar entre Login e Cadastro
 tabBtns.forEach(btn => {
@@ -337,248 +392,135 @@ filterSelect === null || filterSelect === void 0 ? void 0 : filterSelect.addEven
     const selectedValue = filterSelect.value;
     console.log(`Filtrando por: ${selectedValue}`);
 });
-loginBtn === null || loginBtn === void 0 ? void 0 : loginBtn.addEventListener('click', (e) => {
-    e.preventDefault(); // Evita qualquer comportamento padrão
-    if (authModal)
-        authModal.style.display = 'flex';
+
+// Lógica do Dropdown de Usuário
+const userBtns = document.querySelectorAll('.user-btn');
+userBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        // Fecha outros dropdowns se houver
+        userBtns.forEach(otherBtn => {
+            if (otherBtn !== btn) otherBtn.classList.remove('active');
+        });
+        btn.classList.toggle('active');
+    });
 });
-const productsCarousel = document.querySelector('.products-carousel');
-if (productsCarousel) {
-    const track = productsCarousel.querySelector('.carousel-track');
-    const grid = productsCarousel.querySelector('.product-grid');
-    const cards = Array.from(grid.querySelectorAll('.product-card'));
-    const prev = productsCarousel.querySelector('.carousel-arrow.prev');
-    const next = productsCarousel.querySelector('.carousel-arrow.next');
-    let active = 2;
-    let GAP = 24;
-    const gapVar = getComputedStyle(productsCarousel).getPropertyValue('--pc-gap');
-    const parsedGap = parseInt(gapVar.trim(), 10);
-    if (!isNaN(parsedGap)) GAP = parsedGap;
-    const TOTAL = cards.length;
-    function applyClasses() {
-        cards.forEach((c, i) => {
-            c.classList.remove('is-center', 'is-near', 'is-far');
-            if (i === active) {
-                c.classList.add('is-center');
-            } else if (i === ((active - 1 + TOTAL) % TOTAL) || i === ((active + 1) % TOTAL)) {
-                c.classList.add('is-near');
+
+// Fechar dropdown ao clicar fora
+window.addEventListener('click', (e) => {
+    userBtns.forEach(btn => {
+        if (!btn.contains(e.target)) {
+            btn.classList.remove('active');
+        }
+    });
+});
+
+// Lógica do Carrossel de Produtos com Autoplay e Efeito 3D
+const carouselTracks = document.querySelectorAll('.carousel-track');
+carouselTracks.forEach(track => {
+    const prevBtn = track.parentElement.querySelector('.carousel-arrow.prev');
+    const nextBtn = track.parentElement.querySelector('.carousel-arrow.next');
+    const cards = Array.from(track.querySelectorAll('.product-card'));
+    let currentIndex = 0;
+    let autoplayInterval;
+
+    const updateCarousel = () => {
+        cards.forEach((card, index) => {
+            card.classList.remove('is-center', 'is-near', 'is-far');
+            
+            if (index === currentIndex) {
+                card.classList.add('is-center');
+            } else if (index === (currentIndex + 1) % cards.length || index === (currentIndex - 1 + cards.length) % cards.length) {
+                card.classList.add('is-near');
             } else {
-                c.classList.add('is-far');
+                card.classList.add('is-far');
             }
-            const rightDist = (i - active + TOTAL) % TOTAL; // distância para direita [0..TOTAL-1]
-            let rel = rightDist;
-            if (rel > TOTAL / 2) rel = rel - TOTAL; // normaliza para intervalo negativo do lado esquerdo
-            // Clamp para [-2, -1, 0, 1, 2] como "vizinhança" visível
-            if (rel < -2) rel = -3;
-            if (rel > 2) rel = 3;
-            const angle = rel * 10; // inclinação giratória
-            const depth = rel === 0 ? 40 : (Math.abs(rel) === 1 ? 20 : 0);
-            const scale = rel === 0 ? 1.06 : (Math.abs(rel) === 1 ? 0.95 : 0.88);
-            c.style.transform = `translateZ(${depth}px) rotateY(${angle}deg) scale(${scale})`;
-            c.style.zIndex = (100 - Math.abs(rel)).toString();
+        });
+
+        // Scroll para o card central
+        const cardWidth = cards[0].offsetWidth + 12; // card + gap
+        const offset = currentIndex * cardWidth - (track.clientWidth / 2) + (cards[0].offsetWidth / 2);
+        track.scrollTo({ left: offset, behavior: 'smooth' });
+    };
+
+    const nextSlide = () => {
+        currentIndex = (currentIndex + 1) % cards.length;
+        updateCarousel();
+    };
+
+    const prevSlide = () => {
+        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
+        updateCarousel();
+    };
+
+    const startAutoplay = () => {
+        stopAutoplay();
+        autoplayInterval = setInterval(nextSlide, 3000);
+    };
+
+    const stopAutoplay = () => {
+        clearInterval(autoplayInterval);
+    };
+
+    if (prevBtn && nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            stopAutoplay();
+            nextSlide();
+            startAutoplay();
+        });
+        
+        prevBtn.addEventListener('click', () => {
+            stopAutoplay();
+            prevSlide();
+            startAutoplay();
         });
     }
-    function wrapIndex() {
-        if (active < 0) active = TOTAL - 1;
-        if (active > TOTAL - 1) active = 0;
+
+    // Eventos de mouse
+    track.addEventListener('mouseenter', stopAutoplay);
+    track.addEventListener('mouseleave', startAutoplay);
+
+    // Inicialização
+    if (cards.length > 0) {
+        // Garantir que os 5 produtos apareçam bem no carrossel
+        // O CSS já define a largura para 5 itens, mas vamos garantir que o track possa scrollar
+        updateCarousel();
+        startAutoplay();
     }
-    function update() {
-        const itemW = cards[0] ? cards[0].getBoundingClientRect().width : 0;
-        const offset = active - 2;
-        const tx = -(offset * (itemW + GAP));
-        grid.style.transform = `translateX(${tx}px)`;
-    }
-    function go(dir) {
-        active += dir;
-        wrapIndex();
-        applyClasses();
-        update();
-    }
-    prev === null || prev === void 0 ? void 0 : prev.addEventListener('click', () => go(-1));
-    next === null || next === void 0 ? void 0 : next.addEventListener('click', () => go(1));
-    let autoplayId = null;
-    function startAutoplay() {
-        stopAutoplay();
-        autoplayId = setInterval(() => go(1), 4000);
-    }
-    function stopAutoplay() {
-        if (autoplayId) {
-            clearInterval(autoplayId);
-            autoplayId = null;
-        }
-    }
-    productsCarousel.addEventListener('mouseenter', stopAutoplay);
-    productsCarousel.addEventListener('mouseleave', startAutoplay);
-    window.addEventListener('blur', stopAutoplay);
-    window.addEventListener('focus', startAutoplay);
-    window.addEventListener('resize', update);
-    applyClasses();
-    update();
-    startAutoplay();
-}
-//# sourceMappingURL=main.js.map
-// Seleção de tamanho na página de detalhes
-document.querySelectorAll('.sizes-grid .size-option').forEach((btn) => {
-    btn.addEventListener('click', () => {
-        const group = btn.parentElement;
-        group.querySelectorAll('.size-option').forEach(b => b.classList.remove('selected'));
-        btn.classList.add('selected');
+});
+
+// Lógica da Galeria de Detalhes do Produto (Frente/Costas)
+const detailDots = document.querySelectorAll('.detail-dot');
+const detailImages = document.querySelectorAll('.detail-image');
+
+detailDots.forEach(dot => {
+    dot.addEventListener('click', () => {
+        const isBack = dot.classList.contains('dot-back');
+        
+        // Atualiza dots
+        detailDots.forEach(d => d.classList.remove('active'));
+        dot.classList.add('active');
+        
+        // Atualiza imagens
+        detailImages.forEach(img => {
+            img.classList.remove('is-active');
+            if (isBack && img.classList.contains('detail-image-back')) {
+                img.classList.add('is-active');
+            } else if (!isBack && img.classList.contains('detail-image-front')) {
+                img.classList.add('is-active');
+            }
+        });
     });
 });
-// Mostrar detalhes ao selecionar um produto no carrossel
-const detailSection = document.getElementById('product-detail');
-if (detailSection) {
-    const detailImg = detailSection.querySelector('.detail-image');
-    const detailFront = detailSection.querySelector('.detail-image-front');
-    const detailBack = detailSection.querySelector('.detail-image-back');
-    const detailTitle = detailSection.querySelector('.detail-title');
-    const detailPrice = detailSection.querySelector('.detail-price');
-    const dotFront = detailSection.querySelector('.detail-dots .dot-front');
-    const dotBack = detailSection.querySelector('.detail-dots .dot-back');
-    function setActive(side) {
-        if (!detailFront || !detailBack) return;
-        detailFront.classList.toggle('is-active', side === 'front');
-        detailBack.classList.toggle('is-active', side === 'back');
-        if (dotFront && dotBack) {
-            dotFront.classList.toggle('active', side === 'front');
-            dotBack.classList.toggle('active', side === 'back');
-        }
-    }
-    dotFront && dotFront.addEventListener('click', () => setActive('front'));
-    dotBack && dotBack.addEventListener('click', () => setActive('back'));
-    document.querySelectorAll('.products-carousel .product-card .add-to-cart').forEach((btn) => {
-        btn.textContent = '+ Selecionar';
-        btn.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            const card = btn.closest('.product-card');
-            if (!card) return;
-            const imgFront = card.querySelector('.img-front');
-            const frontSrc = (imgFront === null || imgFront === void 0 ? void 0 : imgFront.getAttribute('src')) || '';
-            const backSrc = frontSrc.replace(/FRENTE/i, 'COSTAS');
-            const titleEl = card.querySelector('.product-info h3');
-            const priceEl = card.querySelector('.price');
-            if (detailFront && frontSrc) {
-                detailFront.setAttribute('src', frontSrc);
-                detailFront.setAttribute('alt', titleEl ? `${titleEl.textContent} (Frente)` : 'Produto (Frente)');
-            }
-            if (detailBack && backSrc) {
-                detailBack.setAttribute('src', backSrc);
-                detailBack.setAttribute('alt', titleEl ? `${titleEl.textContent} (Costas)` : 'Produto (Costas)');
-            }
-            if (detailTitle && titleEl) detailTitle.textContent = titleEl.textContent || '';
-            if (detailPrice && priceEl) detailPrice.textContent = priceEl.textContent || '';
-            detailSection.classList.remove('hidden');
-            setActive('front');
-            detailSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        });
+
+// Lógica de Seleção de Tamanho
+const sizeOptions = document.querySelectorAll('.size-option');
+sizeOptions.forEach(option => {
+    option.addEventListener('click', () => {
+        const parent = option.parentElement;
+        parent.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
+        option.classList.add('selected');
     });
-}
-// Lógica de frete na página de frete
-if (document.body && document.body.classList.contains('frete-page')) {
-    const radios = document.querySelectorAll('.shipping-option input[type="radio"]');
-    radios.forEach(r => r.addEventListener('change', () => {
-        updateCartSummary();
-    }));
-}
+});
 
-// Lógica para o dropdown do botão de usuário
-const userBtn = document.querySelector('.user-btn');
-if (userBtn) {
-    userBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Impede que o clique se propague para o document
-        userBtn.classList.toggle('active');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!userBtn.contains(e.target)) {
-            userBtn.classList.remove('active');
-        }
-    });
-}
-
-// Lógica para o modal do carrinho
-const cartBtn = document.getElementById('cart-btn');
-const cartModal = document.getElementById('cart-modal');
-const closeCartModal = document.getElementById('close-cart-modal');
-const checkoutBtn = document.getElementById('checkout-btn');
-
-if (cartBtn && cartModal && closeCartModal && checkoutBtn) {
-    cartBtn.addEventListener('click', (e) => {
-        e.stopPropagation(); // Impede que o clique se propague para o document
-        cartModal.classList.toggle('active');
-    });
-
-    closeCartModal.addEventListener('click', () => {
-        cartModal.classList.remove('active');
-    });
-
-    document.addEventListener('click', (e) => {
-        if (!cartBtn.contains(e.target) && !cartModal.contains(e.target)) {
-            cartModal.classList.remove('active');
-        }
-    });
-
-    checkoutBtn.addEventListener('click', () => {
-        window.location.href = 'checkout.html';
-    });
-}
-
-// Lógica para o menu de navegação mobile
-const mainNavMobile = document.getElementById('main-nav-mobile');
-const closeNavMobile = document.getElementById('close-nav-mobile');
-const navToggleButtons = document.querySelectorAll('.nav-toggle-btn');
-
-if (mainNavMobile) {
-    navToggleButtons.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            mainNavMobile.classList.add('active');
-        });
-    });
-
-    if (closeNavMobile) {
-        closeNavMobile.addEventListener('click', () => {
-            mainNavMobile.classList.remove('active');
-        });
-    }
-
-    document.addEventListener('click', (e) => {
-        // Fecha o menu se o clique for fora do botão e do próprio menu
-        let clickedOnToggle = false;
-        navToggleButtons.forEach(btn => {
-            if (btn.contains(e.target)) clickedOnToggle = true;
-        });
-
-        if (!clickedOnToggle && !mainNavMobile.contains(e.target)) {
-            mainNavMobile.classList.remove('active');
-        }
-    });
-}
-
-// Lógica para Salvar Endereço no Checkout
-const saveAddressBtn = document.getElementById('save-address');
-if (saveAddressBtn) {
-    saveAddressBtn.addEventListener('click', () => {
-        const addressData = {
-            cep: document.getElementById('cep').value,
-            endereco: document.getElementById('endereco').value,
-            bairro: document.getElementById('bairro').value,
-            cidade: document.getElementById('cidade').value,
-            uf: document.getElementById('uf').value
-        };
-
-        localStorage.setItem('saved_address', JSON.stringify(addressData));
-        alert('Endereço salvo com sucesso!');
-    });
-
-    // Carregar endereço salvo ao iniciar
-    const savedAddress = JSON.parse(localStorage.getItem('saved_address'));
-    if (savedAddress) {
-        document.getElementById('cep').value = savedAddress.cep || '';
-        document.getElementById('endereco').value = savedAddress.endereco || '';
-        document.getElementById('bairro').value = savedAddress.bairro || '';
-        document.getElementById('cidade').value = savedAddress.cidade || '';
-        document.getElementById('uf').value = savedAddress.uf || '';
-    }
-}
+//# sourceMappingURL=main.js.map

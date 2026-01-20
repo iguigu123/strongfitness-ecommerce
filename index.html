@@ -6,7 +6,7 @@
     <title>STRONGFITNESS | Oversized Streetwear</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@1,900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@1,900&display=swap" rel="stylesheet">    <script src="https://unpkg.com/@phosphor-icons/web"></script>
 </head>
 <body class="dark-theme">
 
@@ -14,7 +14,7 @@
     <div class="container header-wrapper">
         <div class="logo">
             <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img nav-toggle-btn">
-            <a href="index.html"><h1>STRONG<span>FITNESS</span></h1></a>
+            <a href="/"><h1>STRONG<span>FITNESS</span></h1></a>
         </div>
         <div>
     </div>
@@ -23,7 +23,7 @@
             <div class="search-bar">
                 <input id="search-input" type="text" placeholder="BUSCAR PRODUTO...">
                 <button class="search-btn" type="submit" aria-label="Buscar">
-                    <svg xmlns="http://www.w3.org/200/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="11" cy="11" r="7"></circle>
                         <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                     </svg>
@@ -75,10 +75,10 @@
         <button id="close-nav-mobile" class="close-btn">&times;</button>
     </div>
     <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="produto.html">Produtos</a></li>
+        <li><a href="/">Home</a></li>
+        <li><a href="/produto">Produtos</a></li>
         <li><a href="#faq">FAQ</a></li>
-        <li><a href="#">Sobre Nós</a></li>
+        <li><a href="#footer">Sobre Nós</a></li>
     </ul>
 </nav>
 <div class="promo-marquee">
@@ -95,10 +95,9 @@
     <div class="hero-overlay"></div> <div class="hero-content">
         <h2>VISTA SEU MELHOR <br> DESEMPENHO COM <span>ESTILO</span></h2>
         <p>Oversized Premium. Estética Dark. Performance Máxima.</p>
-        <a href="produto.html#catalogo" class="btn-primary">COMPRAR AGORA</a>
+        <a href="/produto#catalogo" class="btn-primary">COMPRAR AGORA</a>
     </div>
 </section>
-  <script type="module" src="assets/js/main.js"></script>
   <div 
     id="auth-modal" class="modal-overlay">
     <div class="modal-content">
@@ -141,13 +140,13 @@
    <section id="produtos" class="container section-padding">
   
 
-    <div class="product-grid"> 
+
 
         <div class="product-card">
             <div class="product-image-wrapper">
                 <img src="assets/img/produtos/URSO-FRENTE-BRANCO.jpeg" class="img-front" alt="Oversized White">
                 <img src="assets/img/produtos/homem-frente-branco.png" class="img-model" alt="Modelo White">
-                <a href="produto.html#catalogo" class="add-to-cart">+ Ver mais</a>
+                <a href="/produto#catalogo" class="view-product-btn">+ Ver mais</a>
             </div>
             <div class="product-info">
                  <span class="promo-tag">LANÇAMENTO</span>
@@ -158,11 +157,28 @@
                 </div>
             </div>
         </div>
+
         <div class="product-card">
             <div class="product-image-wrapper">
-                <img src="assets/img/produtos/URSO-FRENTE-RED.jpeg" class="img-front" alt="Oversized Grey">
-                <img src="assets/img/produtos/homem-frente-red.jpg" class="img-model" alt="Modelo Grey">
-                <a href="produto.html#catalogo" class="add-to-cart">+ Ver mais</a>
+                <img src="assets/img/produtos/URSO-FRENTE-CINZA.jpeg" class="img-front" alt="Oversized Grey">
+                <img src="assets/img/produtos/homem-frente-cinza.png" class="img-model" alt="Modelo Grey">
+                <a href="/produto#catalogo" class="view-product-btn">+ Ver mais</a>
+            </div>
+            <div class="product-info">
+                 <span class="promo-tag">LANÇAMENTO</span>
+                <h3>Oversized Urso Grey</h3>
+                <div class="price-row">
+                    <p class="price">R$ 79,90</p>
+                    <span class="rating">4.8 ★</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <div class="product-image-wrapper">
+                <img src="assets/img/produtos/URSO-FRENTE-RED.jpeg" class="img-front" alt="Oversized Red">
+                <img src="assets/img/produtos/homem-frente-red.jpg" class="img-model" alt="Modelo Red">
+                <a href="/produto#catalogo" class="view-product-btn">+ Ver mais</a>
            </div>
             <div class="product-info">
                 <span class="promo-tag">LANÇAMENTO</span>
@@ -174,12 +190,11 @@
           </div>  
       </div>  
 
-
      <div class="product-card">
             <div class="product-image-wrapper">
-                <img src="assets/img/produtos/URSO-FRENTE-MARROM.jpeg" class="img-front" alt="Oversized Grey">
-                <img src="assets/img/produtos/homem-frente-marrom.jpg" class="img-model" alt="Modelo Grey">
-                <a href="produto.html#catalogo" class="add-to-cart">+ Ver mais</a>
+                <img src="assets/img/produtos/URSO-FRENTE-MARROM.jpeg" class="img-front" alt="Oversized Earth">
+                <img src="assets/img/produtos/homem-frente-marrom.jpg" class="img-model" alt="Modelo Earth">
+                <a href="/produto#catalogo" class="view-product-btn">+ Ver mais</a>
             </div>
             <div class="product-info">
                 <span class="promo-tag">LANÇAMENTO</span>
@@ -202,7 +217,7 @@
         </video>
         <div class="video-overlay">
             <h2>NEW COLLECTION <span class="highlight">2026</span></h2>
-            <a href="produto.html#catalogo" class="btn-primary-video">VER AGORA</a>
+            <a href="/produto#catalogo" class="btn-primary-video">VER AGORA</a>
     </div>
         </div>
     </div>
@@ -244,7 +259,7 @@
         </div>
     </div>
 </section>
-<footer>
+<footer id="footer">
     <div class="container footer-grid">
         <div class="footer-brand">
             <img src="assets/img/produtos/urso-logo.jpeg" alt="Logo Strong" class="footer-logo">
