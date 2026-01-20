@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRONGFITNESS | Dashboard.html
-    </title>
+    <title>STRONGFITNESS | Frete</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@1,900&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme checkout-page">
+<body class="dark-theme frete-page">
     <header id="main-header">
         <div class="container header-wrapper">
             <div class="logo">
@@ -20,7 +19,7 @@
                 <div class="search-bar">
                     <input id="search-input" type="text" placeholder="BUSCAR PRODUTO...">
                     <button class="search-btn" type="submit" aria-label="Buscar">
-                        <svg xmlns="http://www.w3.org/200/ svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <svg xmlns="http://www.w3.org/200/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                             <circle cx="11" cy="11" r="7"></circle>
                             <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
                         </svg>
@@ -50,7 +49,61 @@
             <li><a href="#">Sobre Nós</a></li>
         </ul>
     </nav>
-    
+    <div class="promo-marquee">
+        <div class="marquee-track">
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+        </div>
+    </div>
+
+    <section class="section-padding">
+        <div class="catalog-container frete-grid">
+            <div class="frete-options">
+                <h2 class="checkout-title">Escolha o frete</h2>
+                <div class="shipping-options">
+                    <label class="shipping-option">
+                        <input type="radio" name="shipping" checked>
+                        <div class="shipping-info">
+                            <span class="ship-name">Normal</span>
+                            <span class="ship-eta">8–12 dias úteis</span>
+                        </div>
+                        <span class="ship-price">R$ 0,00</span>
+                    </label>
+                    <label class="shipping-option">
+                        <input type="radio" name="shipping">
+                        <div class="shipping-info">
+                            <span class="ship-name">Expresso</span>
+                            <span class="ship-eta">5–8 dias úteis</span>
+                        </div>
+                        <span class="ship-price">R$ 19,90</span>
+                    </label>
+                </div>
+
+                <a href="pay.html" class="cta-continue">IR PARA PAGAMENTO</a>
+                <a href="checkout.html" class="back-info-link">Voltar para mais informações</a>
+            </div>
+            <aside class="checkout-summary">
+                <div class="summary-card">
+                    <h3>Itens do Carrinho</h3>
+                    <div class="summary-items" id="checkout-summary-items">
+                        <!-- Itens dinâmicos aqui -->
+                    </div>
+                    <div class="coupon-row">
+                        <input type="text" placeholder="Adicionar cupom">
+                        <button class="apply-coupon">Aplicar</button>
+                    </div>
+                    <h3>Resumo</h3>
+                    <div class="summary-row"><span>Itens</span><span id="summary-subtotal">R$ 0,00</span></div>
+                    <div class="summary-row"><span>Frete</span><span class="summary-frete">R$ 0,00</span></div>
+                    <div class="summary-row"><span>Desconto</span><span id="summary-discount">- R$ 0,00</span></div>
+                    <div class="summary-total"><span>Total</span><span id="summary-total">R$ 0,00</span></div>
+                </div>
+            </aside>
+        </div>
+    </section>
 
     <footer>
         <div class="container footer-grid">

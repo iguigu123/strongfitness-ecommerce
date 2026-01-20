@@ -1,65 +1,311 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>STRONGFITNESS/Produtos</title>
+    <title>STRONGFITNESS | Produtos</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="assets/css/style.css">
-
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@1,900&display=swap" rel="stylesheet">
 </head>
-<body class="dark-theme">
-
-    <header id="main-header">       
-    <div class="container header-wrapper">
-        <div class="logo">
-            <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img">
-            <h1>STRONG<span>FITNESS</span></h1>
-        </div>
-        <div>
-    </div>
-
-        <div class="header-center">
-            <div class="search-bar">
-                <input type="text" placeholder="BUSCAR PRODUTO...">
-                <button type="submit"><i class="ph ph-magnifying-glass"></i></button>
+<body class="dark-theme products-page">
+    <header id="main-header">
+        <div class="container header-wrapper">
+            <div class="logo">
+                <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img nav-toggle-btn">
+                <a href="index.html"><h1>STRONG<span>FITNESS</span></h1></a>
+            </div>
+            <div class="header-center">
+                <div class="search-bar">
+                    <input id="search-input" type="text" placeholder="BUSCAR PRODUTO...">
+                    <button class="search-btn" type="submit" aria-label="Buscar">
+                        <svg xmlns="http://www.w3.org/200/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="header-right header-actions">
+                <button class="header-icon-btn header-link-login" id="open-auth">
+                    <i class="ph ph-user"></i>
+                    <span>LOGIN</span>
+                </button>
+                <button class="header-icon-btn" id="open-register">
+                    <i class="ph ph-user"></i>
+                    <span class="cart-count">CRIAR CONTA</span>
+                </button>
+                <button class="action-btn user-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <div class="user-dropdown">
+                        <a href="#">Meu perfil</a>
+                        <a href="#">Endereços</a>
+                        <a href="#">Sair</a>
+                    </div>
+                </button>
+                <button id="cart-btn" class="action-btn cart-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                    <span id="cart-count">0</span>
+                </button>
+                <div id="cart-modal" class="cart-modal">
+                    <div class="cart-header">
+                        <h3>Seu Carrinho</h3>
+                        <button id="close-cart-modal" class="close-btn">&times;</button>
+                    </div>
+                    <div class="cart-items">
+                        <p>Seu carrinho está vazio.</p>
+                    </div>
+                    <div class="cart-summary">
+                        <p>Total: R$ <span id="cart-total">0.00</span></p>
+                        <button id="checkout-btn" class="btn-primary">FINALIZAR COMPRA</button>
+                    </div>
+                </div>
             </div>
         </div>
-
-        <div class="header-right header-actions">
-            <button class="header-icon-btn header-link-login" id="open-auth">
-                <i class="ph ph-user"></i>
-                <span>LOGIN</span>
-            </button>
-            <button class="header-icon-btn" id="open-cart">
-                <i class="ph ph-user"></i>
-                <span class="cart-count">CRIAR CONTA</span>
-            </button>
+    </header>
+    <nav id="main-nav-mobile" class="main-nav-mobile">
+        <div class="nav-mobile-header">
+            <button id="close-nav-mobile" class="close-btn">&times;</button>
+        </div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="produto.html">Produtos</a></li>
+            <li><a href="#faq">FAQ</a></li>
+            <li><a href="#">Sobre Nós</a></li>
+        </ul>
+    </nav>
+    <div class="promo-marquee">
+        <div class="marquee-track">
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+            <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
         </div>
     </div>
-        <div class="header-actions">
-    <button class="action-btn user-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    </button>
-    <div>
-</div>
 
-    <button id="cart-btn" class="action-btn cart-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-        <span id="cart-count">0</span>
-    </button>
-</div>
-<header>
-    </div>
-   <section class="hero-products">
-    <div class="hero-overlay">
+    <section id="hero" style="background-image: url('assets/img/banners/banner-header-produto.png');">
+        <div class="hero-overlay"></div>
         <div class="hero-content">
-            <span class="hero-subtitle">STRONGFITNESS EXCLUSIVE</span>
-            <h1 class="hero-title">STREETWEAR <span class="highlight">OVERSIZED</span></h1>
-            <p class="hero-description">A estética brutal que você precisa para dominar o treino e as ruas.</p>
-            <a href="#catalog-grid" class="btn-hero-scroll">VER COLEÇÃO</a>
+            <h2>COLEÇÃO <span>OVERSIZED</span></h2>
+            <p>Oversized Premium em várias cores e estilos.</p>
+        </div>
+    </section>
+
+        </div>
+        <div class="products-carousel">
+            <button class="carousel-arrow prev" aria-label="Anterior">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+            </button>
+            <div class="carousel-track">
+                <div class="product-grid">
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="assets/img/produtos/URSO-FRENTE-PRETO.jpeg" class="img-front" alt="Oversized Black">
+                    <img src="assets/img/produtos/homem-frente-black.png" class="img-model" alt="Modelo Black">
+                    <button class="add-to-cart">+ Adicionar rapido</button>
+                </div>
+                <div class="product-info">
+                    <h3>Oversized Urso Black</h3>
+                    <div class="price-row">
+                        <p class="price">R$ 79,90</p>
+                        <span class="rating">4.9 ★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="assets/img/produtos/URSO-FRENTE-BRANCO.jpeg" class="img-front" alt="Oversized White">
+                    <img src="assets/img/produtos/homem-frente-branco.png" class="img-model" alt="Modelo White">
+                    <button class="add-to-cart">+ Adicionar rapido</button>
+                </div>
+                <div class="product-info">
+                    <h3>Oversized Urso White</h3>
+                    <div class="price-row">
+                        <p class="price">R$ 79,90</p>
+                        <span class="rating">5.0 ★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="assets/img/produtos/URSO-FRENTE-CINZA.jpeg" class="img-front" alt="Oversized Grey">
+                    <img src="assets/img/produtos/homem-frente-cinza.png" class="img-model" alt="Modelo Grey">
+                    <button class="add-to-cart">+ Adicionar rapido</button>
+                </div>
+                <div class="product-info">
+                    <h3>Oversized Urso Grey</h3>
+                    <div class="price-row">
+                        <p class="price">R$ 79,90</p>
+                        <span class="rating">4.8 ★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="assets/img/produtos/URSO-FRENTE-RED.jpeg" class="img-front" alt="Oversized Red">
+                    <img src="assets/img/produtos/homem-frente-red.jpg" class="img-model" alt="Modelo Red">
+                    <button class="add-to-cart">+ Adicionar rapido</button>
+                </div>
+                <div class="product-info">
+                    <h3>Oversized Urso Red</h3>
+                    <div class="price-row">
+                        <p class="price">R$ 79,90</p>
+                        <span class="rating">4.8 ★</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <div class="product-image-wrapper">
+                    <img src="assets/img/produtos/URSO-FRENTE-MARROM.jpeg" class="img-front" alt="Oversized Earth">
+                    <img src="assets/img/produtos/homem-frente-marrom.jpg" class="img-model" alt="Modelo Earth">
+                    <button class="add-to-cart">+ Adicionar rapido</button>
+                </div>
+                <div class="product-info">
+                    <h3>Oversized Urso Earth</h3>
+                    <div class="price-row">
+                        <p class="price">R$ 79,90</p>
+                        <span class="rating">4.8 ★</span>
+                    </div>
+                </div>
+            </div>
+                </div>
+            </div>
+            <button class="carousel-arrow next" aria-label="Próximo">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+            </button>
+        </div>
+        </div>
+    </section>
+
+    <section class="section-padding">
+        <div id="product-detail" class="catalog-container product-detail hidden">
+            <div class="detail-gallery">
+                <img src="assets/img/produtos/URSO-FRENTE-CINZA.jpeg" alt="Oversized Urso Grey (Frente)" class="detail-image detail-image-front is-active">
+                <img src="assets/img/produtos/URSO-COSTAS-CINZA.jpeg" alt="Oversized Urso Grey (Costas)" class="detail-image detail-image-back">
+                <div class="detail-dots" aria-label="Alternar imagens">
+                    <button class="detail-dot dot-front active" aria-label="Ver frente"></button>
+                    <button class="detail-dot dot-back" aria-label="Ver costas"></button>
+                </div>
+            </div>
+            <div class="detail-info">
+                <h2 class="detail-title">Oversized Urso Grey</h2>
+                <div class="detail-price-row">
+                    <span class="detail-price">R$ 79,90</span>
+                    <span class="badge-cashback">10% DE DESCONTO NA PRIMEIRA COMPRA</span>
+                </div>
+                <div class="detail-sizes">
+                    <span class="sizes-label">Tamanhos</span>
+                    <div class="sizes-grid">
+                        <button class="size-option">P</button>
+                        <button class="size-option">M</button>
+                        <button class="size-option">G</button>
+                        <button class="size-option">GG</button>
+                    </div>
+                </div>
+                <button class="cta-buy">ADICIONAR AO  CARRINHO</button>
+                <div class="trust-grid">
+                    <div class="trust-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"></rect><line x1="16" y1="8" x2="23" y2="8"></line><line x1="3" y1="16" x2="6" y2="16"></line></svg>
+                        <span>Desbloqueie frete grátis em compras acima de R$199,90</span>
+                    </div>  
+                    </div>
+                    <div class="trust-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 3 21 8 16 13"></polyline><polyline points="8 21 3 16 8 11"></polyline><line x1="4" y1="9" x2="20" y2="15"></line></svg>
+                        <span>Troca grátis: a primeira é por nossa conta</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                        <span>Parcelamento em até 10x sem juros no cartão</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="auth-modal" class="modal-overlay">
+        <div class="modal-content">
+            <button id="close-modal" class="close-btn">&times;</button>
+            <div class="auth-tabs">
+                <button class="tab-btn active" data-tab="login">LOGIN</button>
+                <button class="tab-btn" data-tab="register">CADASTRO</button>
+            </div>
+            <form id="login-form" class="auth-form active">
+                <div class="input-group">
+                    <input type="email" placeholder="E-mail" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Senha" required>
+                </div>
+                <button type="submit" class="btn-primary">ENTRAR NA CONTA</button>
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </form>
+            <form id="register-form" class="auth-form">
+                <div class="input-group">
+                    <input type="text" placeholder="Nome Completo" required>
+                </div>
+                <div class="input-group">
+                    <input type="email" placeholder="E-mail" required>
+                </div>
+                <div class="input-group">
+                    <input type="password" placeholder="Crie uma Senha" required>
+                </div>
+                <button type="submit" class="btn-primary">CRIAR MINHA CONTA</button>
+            </form>
         </div>
     </div>
-</section>
-    
-</body> 
+
+    <footer>
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <img src="assets/img/produtos/urso-logo.jpeg" alt="Logo Strong" class="footer-logo">
+                <p>A estética do futuro aplicada ao seu treino.</p>
+            </div>
+            <div class="footer-links">
+                <h4>SUPORTE</h4>
+                <ul>
+                    <li><a href="#">Rastrear Pedido</a></li>
+                    <li><a href="#">Trocas e Devoluções</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>CONNECT</h4>
+                <div class="social-icons">
+                    <img src="assets/img/logo/instagram.jpg" alt="Logo instagram" class="footer-logo">
+                    <img src="assets/img/logo/whatsapp.jpg" alt="Logo whatsapp" class="footer-logo">
+                    <img src="assets/img/logo/tiktok.png" alt="Logo tiktok" class="footer-logo">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 STRONGFITNESS - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const searchTerm = urlParams.get('search');
+            const productCards = document.querySelectorAll('.product-card');
+
+            if (searchTerm) {
+                const decodedSearchTerm = decodeURIComponent(searchTerm).toLowerCase();
+                productCards.forEach(card => {
+                    const productName = card.querySelector('.product-info h3')?.textContent.toLowerCase();
+                    if (productName && productName.includes(decodedSearchTerm)) {
+                        card.style.display = ''; // Show the card
+                    } else {
+                        card.style.display = 'none'; // Hide the card
+                    }
+                });
+            }
+        });
+    </script>
+</body>
 </html>

@@ -13,16 +13,21 @@
     <header id="main-header">       
     <div class="container header-wrapper">
         <div class="logo">
-            <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img">
-            <h1>STRONG<span>FITNESS</span></h1>
+            <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img nav-toggle-btn">
+            <a href="index.html"><h1>STRONG<span>FITNESS</span></h1></a>
         </div>
         <div>
     </div>
 
         <div class="header-center">
             <div class="search-bar">
-                <input type="text" placeholder="BUSCAR PRODUTO...">
-                <button type="submit"><i class="ph ph-magnifying-glass"></i></button>
+                <input id="search-input" type="text" placeholder="BUSCAR PRODUTO...">
+                <button class="search-btn" type="submit" aria-label="Buscar">
+                    <svg xmlns="http://www.w3.org/200/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="7"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </button>
             </div>
         </div>
 
@@ -31,31 +36,66 @@
                 <i class="ph ph-user"></i>
                 <span>LOGIN</span>
             </button>
-            <button class="header-icon-btn" id="open-cart">
+            <button class="header-icon-btn" id="open-register">
                 <i class="ph ph-user"></i>
-                <span class="cart-count">CRIAR CONTA</span>
+                <span class="register-text">CRIAR CONTA</span>
             </button>
+            <button class="action-btn user-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                <div class="user-dropdown">
+                    <a href="#"><i class="ph ph-user-circle"></i> Meu perfil</a>
+                    <a href="#"><i class="ph ph-map-pin"></i> Endereços</a>
+                    <a href="#" class="logout"><i class="ph ph-sign-out"></i> Sair</a>
+                </div>
+            </button>
+        
+            <button id="cart-btn" class="action-btn cart-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                <span id="cart-count">0</span>
+            </button>
+            <div id="cart-modal" class="cart-modal">
+                <div class="cart-header">
+                    <h3>Seu Carrinho</h3>
+                    <button id="close-cart-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="cart-items">
+                    <p>Seu carrinho está vazio.</p>
+                </div>
+                <div class="cart-summary">
+                    <p>Total: R$ <span id="cart-total">0.00</span></p>
+                    <button id="checkout-btn" class="btn-primary">FINALIZAR COMPRA</button>
+                </div>
+            </div>
         </div>
-    </div>
-        <div class="header-actions">
-    <button class="action-btn user-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    </button>
-
-    <button id="cart-btn" class="action-btn cart-btn">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"/><circle cx="19" cy="21" r="1"/><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 2 0 0 0 1.95-1.57l1.65-7.43H5.12"/></svg>
-        <span id="cart-count">0</span>
-    </button>
-</div>
     </div>
     
 </header>
+<nav id="main-nav-mobile" class="main-nav-mobile">
+    <div class="nav-mobile-header">
+        <button id="close-nav-mobile" class="close-btn">&times;</button>
+    </div>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="produto.html">Produtos</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#">Sobre Nós</a></li>
+    </ul>
+</nav>
+<div class="promo-marquee">
+    <div class="marquee-track">
+        <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+        <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+        <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+        <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+        <span>🔥 10% de desconto na sua primeira compra ⚡️ 💳</span>
+    </div>
+</div>
 
  <section id="hero">
     <div class="hero-overlay"></div> <div class="hero-content">
         <h2>VISTA SEU MELHOR <br> DESEMPENHO COM <span>ESTILO</span></h2>
         <p>Oversized Premium. Estética Dark. Performance Máxima.</p>
-        <a href="#produtos" class="btn-primary">COMPRAR AGORA</a>
+        <a href="produto.html#catalogo" class="btn-primary">COMPRAR AGORA</a>
     </div>
 </section>
   <script type="module" src="assets/js/main.js"></script>
@@ -95,58 +135,22 @@
         </form>
     </div>
 </div>
-<div id="auth-modal" style="display: none;">
-    <div class="modal-content">
-        <button id="close-modal">X</button>
-
-        <div class="tabs">
-            <button class="tab-btn active" data-tab="login">Login</button>
-            <button class="tab-btn" data-tab="register">Cadastro</button>
-        </div>
-
-        <form id="login-form" class="auth-form active">
-            <!-- campos login -->
-        </form>
-
-        <form id="register-form" class="auth-form">
-            <!-- campos cadastro -->
-        </form>
-    </div>
-</div>
 
 </body>
 
    <section id="produtos" class="container section-padding">
   
 
-    <div class="product-grid">
-
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <span class="tag">HOT</span>
-                <img src="assets/img/produtos/URSO-FRENTE-PRETO.jpeg" class="img-front" alt="Oversized Black">
-                <img src="assets/img/produtos/homem-frente-black.png" class="img-model" alt="Modelo Black">
-                
-                <button class="add-to-cart">+ Adicionar ao carrinho</button>
-            </div>
-            <div class="product-info">
-            
-                <h3>Oversized Urso Black</h3>
-                <div class="price-row">
-                    <p class="price">R$ 79,90</p>
-                    <span class="rating">4.9 ★</span>
-                </div>
-            </div>
-        </div>
+    <div class="product-grid"> 
 
         <div class="product-card">
             <div class="product-image-wrapper">
                 <img src="assets/img/produtos/URSO-FRENTE-BRANCO.jpeg" class="img-front" alt="Oversized White">
                 <img src="assets/img/produtos/homem-frente-branco.png" class="img-model" alt="Modelo White">
-                <button class="add-to-cart">+ Adicionar ao carrinho</button>
+                <a href="produto.html#catalogo" class="add-to-cart">+ Ver mais</a>
             </div>
             <div class="product-info">
-                
+                 <span class="promo-tag">LANÇAMENTO</span>
                 <h3>Oversized Urso White</h3>
                 <div class="price-row">
                     <p class="price">R$ 79,90</p>
@@ -154,28 +158,11 @@
                 </div>
             </div>
         </div>
-
-        <div class="product-card">
-            <div class="product-image-wrapper">
-                <img src="assets/img/produtos/URSO-FRENTE-CINZA.jpeg" class="img-front" alt="Oversized Grey">
-                <img src="assets/img/produtos/homem-frente-cinza.png" class="img-model" alt="Modelo Grey">
-                <button class="add-to-cart">+ Adicionar ao carrinho</button>
-            </div>
-            <div class="product-info">
-                <span class="promo-tag">LANÇAMENTO</span>
-                <h3>Oversized Urso Grey</h3>
-                <div class="price-row">
-                    <p class="price">R$ 79,90</p>
-                    <span class="rating">4.8 ★</span>
-                </div>
-          </div>  
-    </div>  
-    
         <div class="product-card">
             <div class="product-image-wrapper">
                 <img src="assets/img/produtos/URSO-FRENTE-RED.jpeg" class="img-front" alt="Oversized Grey">
                 <img src="assets/img/produtos/homem-frente-red.jpg" class="img-model" alt="Modelo Grey">
-                <button class="add-to-cart">+ Adicionar ao carrinho</button>
+                <a href="produto.html#catalogo" class="add-to-cart">+ Ver mais</a>
            </div>
             <div class="product-info">
                 <span class="promo-tag">LANÇAMENTO</span>
@@ -192,7 +179,7 @@
             <div class="product-image-wrapper">
                 <img src="assets/img/produtos/URSO-FRENTE-MARROM.jpeg" class="img-front" alt="Oversized Grey">
                 <img src="assets/img/produtos/homem-frente-marrom.jpg" class="img-model" alt="Modelo Grey">
-                <button class="add-to-cart">+ Adicionar ao carrinho</button>
+                <a href="produto.html#catalogo" class="add-to-cart">+ Ver mais</a>
             </div>
             <div class="product-info">
                 <span class="promo-tag">LANÇAMENTO</span>
@@ -215,7 +202,7 @@
         </video>
         <div class="video-overlay">
             <h2>NEW COLLECTION <span class="highlight">2026</span></h2>
-            <button class="btn-primary-video">VER AGORA</button>
+            <a href="produto.html#catalogo" class="btn-primary-video">VER AGORA</a>
     </div>
         </div>
     </div>
