@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STRONGFITNESS | Meu Perfil</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@300;400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:ital,wght@1,900&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        .profile-container {
+            display: grid;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .profile-sidebar {
+            background-color: #1a1a1a;
+            padding: 1.5rem;
+            border-radius: 8px;
+            height: fit-content;
+        }
+
+        .profile-menu {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-menu li {
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-menu button {
+            width: 100%;
+            text-align: left;
+            padding: 1rem;
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.3s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .profile-menu button:hover, .profile-menu button.active {
+            background-color: #333;
+            color: #fff;
+        }
+
+        .profile-content {
+            background-color: #1a1a1a;
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .profile-section {
+            display: none;
+        }
+
+        .profile-section.active {
+            display: block;
+        }
+
+        .profile-section h2 {
+            margin-top: 0;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #333;
+            padding-bottom: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #ccc;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            background-color: #333;
+            border: 1px solid #444;
+            color: #fff;
+            border-radius: 4px;
+        }
+
+        .form-group input:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .address-card {
+            background-color: #333;
+            padding: 1.5rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .address-actions {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-action {
+            background: none;
+            border: none;
+            color: #ccc;
+            cursor: pointer;
+        }
+
+        .btn-action:hover {
+            color: #fff;
+        }
+
+        @media (max-width: 768px) {
+            .profile-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="dark-theme profile-page">
+    <header id="main-header">
+        <div class="container header-wrapper">
+            <div class="logo">
+                <img src="assets/img/produtos/urso-logo.jpeg" alt="Strong Logo" class="logo-img nav-toggle-btn">
+                <a href="/"><h1>STRONG<span>FITNESS</span></h1></a>
+            </div>
+            <div class="header-center">
+                <div class="search-bar">
+                    <input id="search-input" type="text" placeholder="BUSCAR PRODUTO...">
+                    <button class="search-btn" type="submit" aria-label="Buscar">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="11" cy="11" r="7"></circle>
+                            <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div class="header-right header-actions">
+                <button class="header-icon-btn header-link-login" id="open-auth">
+                    <i class="ph ph-user"></i>
+                    <span>LOGIN</span>
+                </button>
+                <button class="header-icon-btn" id="open-register">
+                    <i class="ph ph-user"></i>
+                    <span class="register-text">CRIAR CONTA</span>
+                </button>
+                <button class="action-btn user-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    <div class="user-dropdown">
+                        <a href="perfil.html"><i class="ph ph-user-circle"></i> Meu perfil</a>
+                        <a href="perfil.html#enderecos"><i class="ph ph-map-pin"></i> Endereços</a>
+                        <a href="#" class="logout"><i class="ph ph-sign-out"></i> Sair</a>
+                    </div>
+                </button>
+                <button id="cart-btn" class="action-btn cart-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="8" cy="21" r="1"></circle><circle cx="19" cy="21" r="1"></circle><path d="M2.05 2.05h2l2.66 12.42a2 2 0 0 0 2 1.58h9.78a2 0 0 0 1.95-1.57l1.65-7.43H5.12"></path></svg>
+                    <span id="cart-count">0</span>
+                </button>
+                <div id="cart-modal" class="cart-modal">
+                    <div class="cart-header">
+                        <h3>Seu Carrinho</h3>
+                        <button id="close-cart-modal" class="close-btn">&times;</button>
+                    </div>
+                    <div class="cart-items">
+                        <p>Seu carrinho está vazio.</p>
+                    </div>
+                    <div class="cart-summary">
+                        <p>Total: R$ <span id="cart-total">0.00</span></p>
+                        <button id="checkout-btn" class="btn-primary">FINALIZAR COMPRA</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="profile-container section-padding">
+        <aside class="profile-sidebar">
+            <ul class="profile-menu">
+                <li><button class="active" onclick="showSection('dados')"><i class="ph ph-user"></i> Dados Pessoais</button></li>
+                <li><button onclick="showSection('enderecos')"><i class="ph ph-map-pin"></i> Endereços</button></li>
+                <li><button onclick="showSection('seguranca')"><i class="ph ph-lock"></i> Segurança</button></li>
+            </ul>
+        </aside>
+
+        <main class="profile-content">
+            <section id="dados" class="profile-section active">
+                <h2>Dados Pessoais</h2>
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label>Nome Completo</label>
+                        <input type="text" value="Usuário Exemplo" id="user-name">
+                    </div>
+                    <div class="form-group">
+                        <label>E-mail</label>
+                        <input type="email" value="usuario@exemplo.com" id="user-email">
+                    </div>
+                    <div class="form-group">
+                        <label>CPF</label>
+                        <input type="text" value="123.456.789-00" disabled>
+                    </div>
+                    <button type="submit" class="btn-primary">Salvar Alterações</button>
+                </form>
+            </section>
+
+            <section id="enderecos" class="profile-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 style="margin: 0;">Meus Endereços</h2>
+                    <button class="btn-primary" onclick="showAddressForm()">Novo Endereço</button>
+                </div>
+
+                <div id="address-list">
+                    <div class="address-card">
+                        <div class="address-actions">
+                            <button class="btn-action" onclick="editAddress(this)"><i class="ph ph-pencil"></i></button>
+                            <button class="btn-action"><i class="ph ph-trash"></i></button>
+                        </div>
+                        <h3>Casa</h3>
+                        <p>Rua Exemplo, 123</p>
+                        <p>Bairro Centro - São Paulo/SP</p>
+                        <p>CEP: 01000-000</p>
+                    </div>
+                </div>
+
+                <div id="address-form" style="display: none; margin-top: 2rem; border-top: 1px solid #333; padding-top: 2rem;">
+                    <h3>Novo Endereço</h3>
+                    <form onsubmit="saveAddress(event)">
+                        <div class="form-group">
+                            <label>Nome do Endereço (Ex: Casa, Trabalho)</label>
+                            <input type="text" required placeholder="Casa">
+                        </div>
+                        <div class="form-group">
+                            <label>CEP</label>
+                            <input type="text" required placeholder="00000-000">
+                        </div>
+                        <div class="form-group">
+                            <label>Rua</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Número</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Complemento</label>
+                            <input type="text">
+                        </div>
+                        <div class="form-group">
+                            <label>Bairro</label>
+                            <input type="text" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Cidade</label>
+                            <input type="text" required>
+                        </div>
+                        <div style="display: flex; gap: 1rem;">
+                            <button type="submit" class="btn-primary">Salvar Endereço</button>
+                            <button type="button" class="btn-secondary" onclick="hideAddressForm()" style="background: #333; color: #fff; border: 1px solid #444;">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+
+            <section id="seguranca" class="profile-section">
+                <h2>Segurança</h2>
+                <form id="security-form">
+                    <div class="form-group">
+                        <label>Senha Atual</label>
+                        <input type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nova Senha</label>
+                        <input type="password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirmar Nova Senha</label>
+                        <input type="password" required>
+                    </div>
+                    <button type="submit" class="btn-primary">Alterar Senha</button>
+                </form>
+            </section>
+        </main>
+    </div>
+
+    <footer id="footer">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <img src="assets/img/produtos/urso-logo.jpeg" alt="Logo Strong" class="footer-logo">
+                <p>A estética do futuro aplicada ao seu treino.</p>
+            </div>
+            <div class="footer-links">
+                <h4>SUPORTE</h4>
+                <ul>
+                    <li><a href="#">Rastrear Pedido</a></li>
+                    <li><a href="#">Trocas e Devoluções</a></li>
+                    <li><a href="#">Termos de Uso</a></li>
+                </ul>
+            </div>
+            <div class="footer-social">
+                <h4>CONNECT</h4>
+                <div class="social-icons">
+                    <img src="assets/img/logo/instagram.jpg" alt="Logo instagram" class="footer-logo">
+                    <img src="assets/img/logo/whatsapp.jpg" alt="Logo whatsapp" class="footer-logo">
+                    <img src="assets/img/logo/tiktok.png" alt="Logo tiktok" class="footer-logo">
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 STRONGFITNESS - Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script type="module" src="assets/js/main.js"></script>
+    <script>
+        function showSection(sectionId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.profile-section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.profile-menu button').forEach(b => b.classList.remove('active'));
+            
+            // Mostra a selecionada
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Atualiza menu
+            const buttons = document.querySelectorAll('.profile-menu button');
+            if (sectionId === 'dados') buttons[0].classList.add('active');
+            if (sectionId === 'enderecos') buttons[1].classList.add('active');
+            if (sectionId === 'seguranca') buttons[2].classList.add('active');
+        }
+
+        function showAddressForm() {
+            document.getElementById('address-form').style.display = 'block';
+            document.getElementById('address-list').style.display = 'none';
+        }
+
+        function hideAddressForm() {
+            document.getElementById('address-form').style.display = 'none';
+            document.getElementById('address-list').style.display = 'block';
+        }
+
+        function saveAddress(e) {
+            e.preventDefault();
+            alert('Endereço salvo com sucesso!');
+            hideAddressForm();
+            // Aqui entraria a lógica real de salvar
+        }
+
+        // Verifica hash na URL para abrir aba correta
+        if (window.location.hash === '#enderecos') {
+            showSection('enderecos');
+        }
+    </script>
+</body>
+</html>

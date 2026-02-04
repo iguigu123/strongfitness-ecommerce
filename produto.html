@@ -39,8 +39,8 @@
                 <button class="action-btn user-btn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                     <div class="user-dropdown">
-                        <a href="#"><i class="ph ph-user-circle"></i> Meu perfil</a>
-                        <a href="#"><i class="ph ph-map-pin"></i> Endereços</a>
+                        <a href="perfil.html"><i class="ph ph-user-circle"></i> Meu perfil</a>
+                        <a href="perfil.html#enderecos"><i class="ph ph-map-pin"></i> Endereços</a>
                         <a href="#" class="logout"><i class="ph ph-sign-out"></i> Sair</a>
                     </div>
                 </button>
@@ -70,7 +70,7 @@
         </div>
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/produto">Produtos</a></li>
+            <li><a href="produto.html">Produtos</a></li>
             <li><a href="/#faq">FAQ</a></li>
             <li><a href="#footer">Sobre Nós</a></li>
         </ul>
@@ -95,9 +95,6 @@
 
         </div>
         <div class="products-carousel">
-            <button class="carousel-arrow prev" aria-label="Anterior">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
-            </button>
             <div class="carousel-track">
                 <div class="product-grid">
             <div class="product-card">
@@ -176,9 +173,11 @@
             </div>
                 </div>
             </div>
-            <button class="carousel-arrow next" aria-label="Próximo">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
-            </button>
+            <div class="carousel-dots" aria-label="Navegação de produtos">
+                <button class="carousel-dot active" aria-label="Grupo 1"></button>
+                <button class="carousel-dot" aria-label="Grupo 2"></button>
+                <button class="carousel-dot" aria-label="Grupo 3"></button>
+            </div>
         </div>
         </div>
     </section>

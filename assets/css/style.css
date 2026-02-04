@@ -835,7 +835,69 @@ footer {
     color: var(--text-gray);
     font-size: 0.75rem;
 }
-/* --- HEADER REDESIGN (LAYOUT DE BUSCA) --- */
+/* --- CARROSSEL 3D (Adicionado) --- */
+
+.carousel-track {
+    overflow-x: hidden; /* Esconde a barra de rolagem mas permite o JS scrollar */
+    padding: 20px 0;
+    width: 100%;
+}
+
+.carousel-track .product-grid {
+    flex-wrap: nowrap !important;
+    justify-content: flex-start;
+    width: max-content;
+    gap: 30px; /* Mantendo gap de 30px */
+    padding: 40px 60px; /* Espaço para não cortar o efeito scale */
+}
+
+.carousel-track .product-card {
+    transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transform-origin: center center;
+    flex: 0 0 300px; /* Largura fixa */
+}
+
+/* Estado Central */
+.carousel-track .product-card.is-center {
+    opacity: 1;
+    transform: scale(1.15);
+    z-index: 10;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+    border: 1px solid var(--accent-red);
+}
+
+/* Lado Direito (Próximo) */
+.carousel-track .product-card.is-right {
+    opacity: 0.7;
+    transform: scale(0.95);
+    z-index: 5;
+    filter: brightness(0.7);
+}
+
+/* Lado Esquerdo (Anterior) */
+.carousel-track .product-card.is-left {
+    opacity: 0.7;
+    transform: scale(0.95);
+    z-index: 5;
+    filter: brightness(0.7);
+}
+
+/* Lado Direito Distante */
+.carousel-track .product-card.is-right-far {
+    opacity: 0.4;
+    transform: scale(0.85);
+    z-index: 1;
+    filter: grayscale(0.5);
+}
+
+/* Lado Esquerdo Distante */
+.carousel-track .product-card.is-left-far {
+    opacity: 0.4;
+    transform: scale(0.85);
+    z-index: 1;
+    filter: grayscale(0.5);
+}
+
 
 header {
     background-color: #050505;
@@ -1859,7 +1921,7 @@ header,
 }
 .products-carousel .carousel-track {
     overflow: hidden;
-    perspective: 800px;
+    /* perspective removed */
 }
 .products-carousel .product-grid {
     display: flex !important;
@@ -1872,7 +1934,7 @@ header,
 }
 .products-carousel .product-card {
     flex: 0 0 calc((100% - var(--pc-gap) * 2) / 3);
-    transform: translateZ(0) scale(0.88);
+    transform: scale(0.88);
     opacity: 0.6;
     transition: transform 0.35s ease, opacity 0.35s ease, box-shadow 0.35s ease;
 }
@@ -1889,17 +1951,17 @@ header,
     }
 }
 .products-carousel .product-card.is-near {
-    transform: translateZ(20px) scale(0.95);
+    transform: scale(0.95);
     opacity: 0.85;
     box-shadow: 0 12px 24px rgba(0,0,0,0.35);
 }
 .products-carousel .product-card.is-center {
-    transform: translateZ(40px) scale(1.06);
+    transform: scale(1.06);
     opacity: 1;
     box-shadow: 0 18px 36px rgba(0,0,0,0.45);
 }
 .products-carousel .product-card.is-far {
-    transform: translateZ(0) scale(0.88);
+    transform: scale(0.88);
     opacity: 0.5;
     box-shadow: none;
 }
@@ -1940,6 +2002,29 @@ header,
     opacity: 1;
     transform: translateY(0);
     z-index: 99;
+}
+
+/* Dots do carrossel de produtos (apenas indicadores) */
+.products-carousel .carousel-dots {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    margin-top: 12px;
+}
+.products-carousel .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #333;
+    border: 1px solid #555;
+    cursor: pointer;
+    transition: 0.2s ease;
+}
+.products-carousel .carousel-dot.active,
+.products-carousel .carousel-dot:hover {
+    background: #fff;
+    border-color: var(--accent-red);
 }
 .product-detail {
     display: grid;

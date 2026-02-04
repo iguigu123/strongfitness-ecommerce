@@ -135,71 +135,37 @@ if (document.body.classList.contains('frete-page')) {
         updateCartSummary();
     }));
 }
-
-// Lógica para os botões de "Adicionar rápido" (abrir detalhes)
-const quickAddBtns = document.querySelectorAll('.add-to-cart');
-const productDetailSection = document.getElementById('product-detail');
-
-quickAddBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        const card = btn.closest('.product-card');
-        if (!card || !productDetailSection) return;
-
-        // Extrai dados do card
-        const name = card.querySelector('h3').textContent;
-        const priceStr = card.querySelector('.price').textContent;
-        const frontImg = card.querySelector('.img-front').getAttribute('src');
-        
-        // Deriva imagem de costas (substituindo FRENTE por COSTAS)
-        const backImg = frontImg.replace('FRENTE', 'COSTAS');
-
-        // Popula a seção de detalhes
-        productDetailSection.querySelector('.detail-title').textContent = name;
-        productDetailSection.querySelector('.detail-price').textContent = priceStr;
-        
-        const detailFront = productDetailSection.querySelector('.detail-image-front');
-        const detailBack = productDetailSection.querySelector('.detail-image-back');
-        
-        detailFront.src = frontImg;
-        detailFront.alt = `${name} (Frente)`;
-        detailBack.src = backImg;
-        detailBack.alt = `${name} (Costas)`;
-
-        // Resetar galeria para mostrar a frente por padrão
-        detailFront.classList.add('is-active');
-        detailBack.classList.remove('is-active');
-        const dots = productDetailSection.querySelectorAll('.detail-dot');
-        dots.forEach(d => d.classList.remove('active'));
-        productDetailSection.querySelector('.dot-front')?.classList.add('active');
-
-        // Mostrar a seção e scroll
-        productDetailSection.classList.remove('hidden');
-        productDetailSection.scrollIntoView({ behavior: 'smooth' });
+// Lógica para seleção de tamanho
+const sizeOptions = document.querySelectorAll('.size-option');
+sizeOptions.forEach(opt => {
+    opt.addEventListener('click', () => {
+        sizeOptions.forEach(o => o.classList.remove('selected'));
+        opt.classList.add('selected');
     });
 });
-
-// Seleciona apenas os botões que realmente adicionam ao carrinho (CTA de compra)
-const botoesComprar = document.querySelectorAll('.cta-buy');
-botoesComprar.forEach((botao) => {
+// Seleciona todos os botões de adicionar
+const botoesAdicionar = Array.from(document.querySelectorAll('.add-to-cart, .cta-buy')).filter((b) => {
+    const isLink = b.tagName.toLowerCase() === 'a';
+    const isCarousel = b.closest('.products-carousel');
+    return !isLink && !isCarousel;
+});
+botoesAdicionar.forEach((botao) => {
     botao.addEventListener('click', (e) => {
         var _a, _b, _c;
         e.preventDefault();
-        const card = botao.closest('.product-detail');
-        if (!card) return;
-        
-        const name = ((_a = card.querySelector('.detail-title')) === null || _a === void 0 ? void 0 : _a.textContent) || 'Produto';
-        const priceStr = ((_b = card.querySelector('.detail-price')) === null || _b === void 0 ? void 0 : _b.textContent) || '0';
+        const card = botao.closest('.product-card') || botao.closest('.product-detail');
+        if (!card)
+            return;
+        const name = ((_a = card.querySelector('h3, .detail-title')) === null || _a === void 0 ? void 0 : _a.textContent) || 'Produto';
+        const priceStr = ((_b = card.querySelector('.price, .detail-price')) === null || _b === void 0 ? void 0 : _b.textContent) || '0';
         const price = parseFloat(priceStr.replace('R$', '').replace(',', '.').trim());
-        const image = ((_c = card.querySelector('.detail-image-front')) === null || _c === void 0 ? void 0 : _c.getAttribute('src')) || '';
-        
+        const image = ((_c = card.querySelector('img')) === null || _c === void 0 ? void 0 : _c.getAttribute('src')) || '';
         // Busca o tamanho selecionado
         let size = 'M'; // Padrão
         const selectedSize = card.querySelector('.size-option.selected');
         if (selectedSize) {
             size = selectedSize.textContent || 'M';
         }
-        
         const existingItem = cart.find(item => item.name === name && item.size === size);
         if (existingItem) {
             existingItem.quantity++;
@@ -207,7 +173,6 @@ botoesComprar.forEach((botao) => {
         else {
             cart.push({ name, price, image, size, quantity: 1 });
         }
-        
         atualizarInterface();
         alert("Produto adicionado ao carrinho!");
     });
@@ -215,28 +180,12 @@ botoesComprar.forEach((botao) => {
 // Lógica para abrir a barra lateral (menu mobile) ao clicar na logo
 const logoImg = document.querySelector('.logo-img');
 const mainNavMobile = document.getElementById('main-nav-mobile');
-const closeNavMobile = document.getElementById('close-nav-mobile');
-
 if (logoImg && mainNavMobile) {
     logoImg.addEventListener('click', (e) => {
         e.stopPropagation();
         mainNavMobile.classList.add('active');
     });
 }
-
-if (closeNavMobile && mainNavMobile) {
-    closeNavMobile.addEventListener('click', () => {
-        mainNavMobile.classList.remove('active');
-    });
-}
-
-// Fechar menu mobile ao clicar em um link
-const mobileLinks = mainNavMobile?.querySelectorAll('a');
-mobileLinks?.forEach(link => {
-    link.addEventListener('click', () => {
-        mainNavMobile?.classList.remove('active');
-    });
-});
 // Efeito de mudar o header no scroll
 window.addEventListener('scroll', () => {
     const header = document.querySelector('header');
@@ -247,118 +196,54 @@ window.addEventListener('scroll', () => {
         header === null || header === void 0 ? void 0 : header.classList.remove('scroll-active');
     }
 });
-// Lógica do Carrinho (Modal)
-const cartBtn = document.getElementById('cart-btn');
-const closeCartModal = document.getElementById('close-cart-modal');
-const cartModal = document.getElementById('cart-modal');
-const checkoutBtn = document.getElementById('checkout-btn');
-
-if (cartBtn && cartModal) {
-    cartBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        cartModal.classList.add('active');
-    });
-}
-
-if (closeCartModal && cartModal) {
-    closeCartModal.addEventListener('click', () => {
-        cartModal.classList.remove('active');
-    });
-}
-
-if (checkoutBtn) {
-    checkoutBtn.addEventListener('click', () => {
-        const isPageInAdmin = window.location.pathname.includes('/admin/');
-        window.location.href = isPageInAdmin ? '../carrinho.html' : 'carrinho.html';
-    });
-}
-
-// Fechar modal ao clicar fora
-window.addEventListener('click', (e) => {
-    if (e.target === cartModal) {
-        cartModal.classList.remove('active');
-    }
-});
-
 const searchInput = document.getElementById('search-input');
 const searchBtn = document.querySelector('.search-btn');
-
-if (searchBtn && searchInput) {
-    const performSearch = () => {
-            const query = searchInput.value.trim();
-            if (query) {
-                window.location.href = `/produto?search=${encodeURIComponent(query)}#catalogo`;
-            }
-        };
-
-    searchBtn.addEventListener('click', (e) => {
-        e.preventDefault();
-        performSearch();
-    });
-
-    searchInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            performSearch();
+const processSearch = (query) => {
+    const q = (query || '').trim();
+    if (document.body.classList.contains('products-page')) {
+        const cards = document.querySelectorAll('.products-carousel .product-card, .product-grid .product-card');
+        if (!q) {
+            cards.forEach(c => (c.style.display = ''));
+            return;
         }
-    });
-}
+        const norm = q.toLowerCase();
+        cards.forEach(c => {
+            const title = (c.querySelector('h3')?.textContent || '').toLowerCase();
+            const matches = title.includes(norm);
+            c.style.display = matches ? '' : 'none';
+        });
+    }
+    else {
+        window.location.href = `produto.html?q=${encodeURIComponent(q)}`;
+    }
+};
+searchInput === null || searchInput === void 0 ? void 0 : searchInput.addEventListener('keyup', (e) => {
+    if (e.key === 'Enter') {
+        processSearch(searchInput.value);
+    }
+});
+searchBtn === null || searchBtn === void 0 ? void 0 : searchBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (searchInput)
+        processSearch(searchInput.value);
+});
 // Seletores de Elementos
 const authModal = document.getElementById('auth-modal');
-const loginBtns = document.querySelectorAll('.header-link-login'); // Todos os botões que abrem o login
-const registerBtns = document.querySelectorAll('#open-register'); // Botões que abrem o cadastro
+const loginBtn = document.querySelector('.header-link-login'); // Link que abre a modal
 const closeModal = document.getElementById('close-modal');
 const tabBtns = document.querySelectorAll('.tab-btn');
 const authForms = document.querySelectorAll('.auth-form');
-
-// Função para abrir o modal em uma aba específica
-const openAuthModal = (tab = 'login') => {
-    if (!authModal) return;
-    authModal.style.display = 'flex';
-    
-    // Alterna para a aba correta
-    tabBtns.forEach(btn => {
-        if (btn.getAttribute('data-tab') === tab) {
-            btn.classList.add('active');
-        } else {
-            btn.classList.remove('active');
-        }
-    });
-    
-    authForms.forEach(form => {
-        if (form.id === `${tab}-form`) {
-            form.classList.add('active');
-        } else {
-            form.classList.remove('active');
-        }
-    });
-};
-
-// 1. Abrir Modal via botões de Login
-loginBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openAuthModal('login');
-    });
+// 1. Abrir Modal
+loginBtn === null || loginBtn === void 0 ? void 0 : loginBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    if (authModal)
+        authModal.style.display = 'flex';
 });
-
-// Abrir Modal via botões de Cadastro
-registerBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.preventDefault();
-        openAuthModal('register');
-    });
-});
-
 // 2. Fechar Modal (No X ou clicando fora)
-closeModal === null || closeModal === void 0 ? void 0 : closeModal.addEventListener('click', () => {
-    if (authModal) authModal.style.display = 'none';
-});
-
+closeModal === null || closeModal === void 0 ? void 0 : closeModal.addEventListener('click', () => authModal.style.display = 'none');
 window.addEventListener('click', (e) => {
-    if (e.target === authModal) {
+    if (e.target === authModal)
         authModal.style.display = 'none';
-    }
 });
 // 3. Alternar entre Login e Cadastro
 tabBtns.forEach(btn => {
@@ -392,135 +277,194 @@ filterSelect === null || filterSelect === void 0 ? void 0 : filterSelect.addEven
     const selectedValue = filterSelect.value;
     console.log(`Filtrando por: ${selectedValue}`);
 });
-
-// Lógica do Dropdown de Usuário
-const userBtns = document.querySelectorAll('.user-btn');
-userBtns.forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        e.stopPropagation();
-        // Fecha outros dropdowns se houver
-        userBtns.forEach(otherBtn => {
-            if (otherBtn !== btn) otherBtn.classList.remove('active');
+loginBtn === null || loginBtn === void 0 ? void 0 : loginBtn.addEventListener('click', (e) => {
+    e.preventDefault(); // Evita qualquer comportamento padrão
+    if (authModal)
+        authModal.style.display = 'flex';
+});
+const carouselTrack = document.querySelector('.products-carousel .carousel-track');
+const carouselDots = document.querySelectorAll('.products-carousel .carousel-dot');
+if (carouselTrack && carouselDots.length === 3) {
+    const cards = Array.from(document.querySelectorAll('.products-carousel .product-card'));
+    const productGrid = document.querySelector('.products-carousel .product-grid');
+    const getMetrics = () => {
+        const style = productGrid ? getComputedStyle(productGrid) : null;
+        const paddingLeft = style ? parseFloat(style.paddingLeft) || 0 : 0;
+        const paddingRight = style ? parseFloat(style.paddingRight) || 0 : 0;
+        return { paddingLeft, paddingRight };
+    };
+    const alignGroupStart = (startIdx) => {
+        const startCard = cards[startIdx];
+        if (!startCard)
+            return;
+        const startRect = startCard.getBoundingClientRect();
+        const trackRect = carouselTrack.getBoundingClientRect();
+        const currentLeft = carouselTrack.scrollLeft;
+        const { paddingLeft } = getMetrics();
+        const delta = startRect.left - (trackRect.left + paddingLeft);
+        carouselTrack.scrollTo({ left: currentLeft + delta, behavior: 'smooth' });
+    };
+    const findClosestCenterIndex = () => {
+        const trackRect = carouselTrack.getBoundingClientRect();
+        const trackCenter = trackRect.left + trackRect.width / 2;
+        let best = 0;
+        let bestDist = Infinity;
+        cards.forEach((c, idx) => {
+            const r = c.getBoundingClientRect();
+            const cc = r.left + r.width / 2;
+            const dist = Math.abs(cc - trackCenter);
+            if (dist < bestDist) {
+                bestDist = dist;
+                best = idx;
+            }
         });
-        btn.classList.toggle('active');
+        return best;
+    };
+    const updateActiveDot = () => {
+        const idx = findClosestCenterIndex();
+        let dotIdx = 1;
+        if (idx === 0)
+            dotIdx = 0;
+        else if (idx === cards.length - 1)
+            dotIdx = 2;
+        else
+            dotIdx = 1;
+        carouselDots.forEach(d => d.classList.remove('active'));
+        carouselDots[dotIdx].classList.add('active');
+    };
+    carouselDots[0].addEventListener('click', () => alignGroupStart(0));
+    carouselDots[1].addEventListener('click', () => alignGroupStart(Math.max(0, Math.floor(cards.length / 2) - 1)));
+    carouselDots[2].addEventListener('click', () => alignGroupStart(Math.max(0, cards.length - 3)));
+    carouselTrack.addEventListener('scroll', updateActiveDot);
+    window.addEventListener('resize', updateActiveDot);
+    updateActiveDot();
+}
+const quickAddButtons = document.querySelectorAll('.products-carousel .add-to-cart');
+quickAddButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const card = btn.closest('.product-card');
+        const detail = document.getElementById('product-detail');
+        if (!card || !detail)
+            return;
+        const nameEl = card.querySelector('h3');
+        const priceEl = card.querySelector('.price');
+        const frontSrc = card.querySelector('.img-front') ? card.querySelector('.img-front').getAttribute('src') : '';
+        const backSrc = card.querySelector('.img-model') ? card.querySelector('.img-model').getAttribute('src') : frontSrc;
+        const dTitle = detail.querySelector('.detail-title');
+        const dPrice = detail.querySelector('.detail-price');
+        const dFront = detail.querySelector('.detail-image-front');
+        const dBack = detail.querySelector('.detail-image-back');
+        const dotFront = detail.querySelector('.dot-front');
+        const dotBack = detail.querySelector('.dot-back');
+        if (dTitle && nameEl)
+            dTitle.textContent = nameEl.textContent || '';
+        if (dPrice && priceEl)
+            dPrice.textContent = priceEl.textContent || '';
+        if (dFront && frontSrc)
+            dFront.setAttribute('src', frontSrc);
+        if (dBack && backSrc)
+            dBack.setAttribute('src', backSrc);
+        detail.classList.remove('hidden');
+        const allDetailImages = detail.querySelectorAll('.detail-image');
+        allDetailImages.forEach(img => img.classList.remove('is-active'));
+        if (dFront)
+            dFront.classList.add('is-active');
+        if (dotFront && dotBack) {
+            dotFront.classList.add('active');
+            dotBack.classList.remove('active');
+        }
+        detail.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
-
-// Fechar dropdown ao clicar fora
-window.addEventListener('click', (e) => {
-    userBtns.forEach(btn => {
-        if (!btn.contains(e.target)) {
-            btn.classList.remove('active');
+const userBtn = document.querySelector('.user-btn');
+if (userBtn) {
+    userBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        userBtn.classList.toggle('active');
+    });
+    document.addEventListener('click', (e) => {
+        if (!userBtn.contains(e.target)) {
+            userBtn.classList.remove('active');
         }
     });
+}
+const openRegisterBtn = document.getElementById('open-register');
+openRegisterBtn === null || openRegisterBtn === void 0 ? void 0 : openRegisterBtn.addEventListener('click', (e) => {
+    var _a, _b;
+    e.preventDefault();
+    if (authModal)
+        authModal.style.display = 'flex';
+    tabBtns.forEach(b => b.classList.remove('active'));
+    authForms.forEach(f => f.classList.remove('active'));
+    (_a = document.querySelector('.tab-btn[data-tab="register"]')) === null || _a === void 0 ? void 0 : _a.classList.add('active');
+    (_b = document.getElementById('register-form')) === null || _b === void 0 ? void 0 : _b.classList.add('active');
 });
-
-// Lógica do Carrossel de Produtos com Autoplay e Efeito 3D
-const carouselTracks = document.querySelectorAll('.carousel-track');
-carouselTracks.forEach(track => {
-    const prevBtn = track.parentElement.querySelector('.carousel-arrow.prev');
-    const nextBtn = track.parentElement.querySelector('.carousel-arrow.next');
-    const cards = Array.from(track.querySelectorAll('.product-card'));
-    let currentIndex = 0;
-    let autoplayInterval;
-
-    const updateCarousel = () => {
-        cards.forEach((card, index) => {
-            card.classList.remove('is-center', 'is-near', 'is-far');
-            
-            if (index === currentIndex) {
-                card.classList.add('is-center');
-            } else if (index === (currentIndex + 1) % cards.length || index === (currentIndex - 1 + cards.length) % cards.length) {
-                card.classList.add('is-near');
-            } else {
-                card.classList.add('is-far');
-            }
-        });
-
-        // Scroll para o card central
-        const cardWidth = cards[0].offsetWidth + 12; // card + gap
-        const offset = currentIndex * cardWidth - (track.clientWidth / 2) + (cards[0].offsetWidth / 2);
-        track.scrollTo({ left: offset, behavior: 'smooth' });
-    };
-
-    const nextSlide = () => {
-        currentIndex = (currentIndex + 1) % cards.length;
-        updateCarousel();
-    };
-
-    const prevSlide = () => {
-        currentIndex = (currentIndex - 1 + cards.length) % cards.length;
-        updateCarousel();
-    };
-
-    const startAutoplay = () => {
-        stopAutoplay();
-        autoplayInterval = setInterval(nextSlide, 3000);
-    };
-
-    const stopAutoplay = () => {
-        clearInterval(autoplayInterval);
-    };
-
-    if (prevBtn && nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            stopAutoplay();
-            nextSlide();
-            startAutoplay();
-        });
-        
-        prevBtn.addEventListener('click', () => {
-            stopAutoplay();
-            prevSlide();
-            startAutoplay();
-        });
-    }
-
-    // Eventos de mouse
-    track.addEventListener('mouseenter', stopAutoplay);
-    track.addEventListener('mouseleave', startAutoplay);
-
-    // Inicialização
-    if (cards.length > 0) {
-        // Garantir que os 5 produtos apareçam bem no carrossel
-        // O CSS já define a largura para 5 itens, mas vamos garantir que o track possa scrollar
-        updateCarousel();
-        startAutoplay();
-    }
-});
-
-// Lógica da Galeria de Detalhes do Produto (Frente/Costas)
-const detailDots = document.querySelectorAll('.detail-dot');
-const detailImages = document.querySelectorAll('.detail-image');
-
-detailDots.forEach(dot => {
-    dot.addEventListener('click', () => {
-        const isBack = dot.classList.contains('dot-back');
-        
-        // Atualiza dots
-        detailDots.forEach(d => d.classList.remove('active'));
-        dot.classList.add('active');
-        
-        // Atualiza imagens
-        detailImages.forEach(img => {
-            img.classList.remove('is-active');
-            if (isBack && img.classList.contains('detail-image-back')) {
-                img.classList.add('is-active');
-            } else if (!isBack && img.classList.contains('detail-image-front')) {
-                img.classList.add('is-active');
-            }
-        });
+const cartBtn = document.getElementById('cart-btn');
+const cartModalEl = document.getElementById('cart-modal');
+const closeCartBtn = document.getElementById('close-cart-modal');
+if (cartBtn && cartModalEl) {
+    cartBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        cartModalEl.classList.toggle('active');
     });
-});
-
-// Lógica de Seleção de Tamanho
-const sizeOptions = document.querySelectorAll('.size-option');
-sizeOptions.forEach(option => {
-    option.addEventListener('click', () => {
-        const parent = option.parentElement;
-        parent.querySelectorAll('.size-option').forEach(opt => opt.classList.remove('selected'));
-        option.classList.add('selected');
+    closeCartBtn === null || closeCartBtn === void 0 ? void 0 : closeCartBtn.addEventListener('click', () => cartModalEl.classList.remove('active'));
+    cartModalEl.addEventListener('click', (e) => {
+        e.stopPropagation();
     });
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+        const clickedInside = cartModalEl.contains(target) || cartBtn.contains(target);
+        if (!clickedInside) {
+            cartModalEl.classList.remove('active');
+        }
+    });
+}
+const checkoutBtn = document.getElementById('checkout-btn');
+checkoutBtn === null || checkoutBtn === void 0 ? void 0 : checkoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    window.location.href = 'checkout.html';
 });
-
+const closeNavBtn = document.getElementById('close-nav-mobile');
+if (closeNavBtn && mainNavMobile) {
+    closeNavBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        mainNavMobile.classList.remove('active');
+    });
+    document.addEventListener('click', (e) => {
+        const target = e.target;
+        if (mainNavMobile.classList.contains('active') && !mainNavMobile.contains(target) && !(logoImg && logoImg.contains(target))) {
+            mainNavMobile.classList.remove('active');
+        }
+    });
+}
+const detailSection = document.getElementById('product-detail');
+if (detailSection) {
+    const dFront = detailSection.querySelector('.detail-image-front');
+    const dBack = detailSection.querySelector('.detail-image-back');
+    const dotFront = detailSection.querySelector('.dot-front');
+    const dotBack = detailSection.querySelector('.dot-back');
+    dotFront === null || dotFront === void 0 ? void 0 : dotFront.addEventListener('click', () => {
+        detailSection.querySelectorAll('.detail-image').forEach(img => img.classList.remove('is-active'));
+        dFront === null || dFront === void 0 ? void 0 : dFront.classList.add('is-active');
+        dotFront.classList.add('active');
+        dotBack === null || dotBack === void 0 ? void 0 : dotBack.classList.remove('active');
+    });
+    dotBack === null || dotBack === void 0 ? void 0 : dotBack.addEventListener('click', () => {
+        detailSection.querySelectorAll('.detail-image').forEach(img => img.classList.remove('is-active'));
+        dBack === null || dBack === void 0 ? void 0 : dBack.classList.add('is-active');
+        dotBack.classList.add('active');
+        dotFront === null || dotFront === void 0 ? void 0 : dotFront.classList.remove('active');
+    });
+}
+if (document.body.classList.contains('products-page')) {
+    const params = new URLSearchParams(window.location.search);
+    const q = params.get('q') || '';
+    if (q) {
+        processSearch(q);
+        if (searchInput)
+            searchInput.value = q;
+    }
+}
 //# sourceMappingURL=main.js.map
